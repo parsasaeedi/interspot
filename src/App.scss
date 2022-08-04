@@ -1,0 +1,165 @@
+@font-face {
+    font-family: Gotham;
+    src: url(./fonts/GothamMedium.otf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-family: Gotham;
+  }
+  
+.header {
+    background-color: black;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    .interspotLogo {
+        width: 10vw;
+    }
+  
+    .container {
+        background-color: #121212;
+        width: 85vw;
+        height: 75vh;
+        border-radius: 2vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+
+        .verticalLine {
+            border-left: 1px solid #202020;
+            height: 95%
+        }
+
+        .content {
+            color: white;
+            width: 32%;
+            height: 85%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+
+            .name {
+                background-color: #202020;
+                border-radius: 2vw;
+                width: 30%;
+                height: 6%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                input {
+                    background-color: #202020;
+                    max-width: 80%;
+                    width: fit-content;
+                    resize: none;
+                    border: none;
+                    color: #606060;
+                    font-size: 1.1vw;
+                    text-align: center;
+
+                    &::placeholder {
+                        color: #606060;
+                    }
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+
+            .playlistsContainer {
+                background-color: #202020;
+                width: 100%;
+                height: 80%;
+                border-radius: 2vw;
+                padding: 5%;
+                display: flex;
+                justify-content: center;
+                
+                .playlistsWrapper {
+                    height: 100%;
+                    width: 100%;
+                    overflow: scroll;
+
+                    display: grid;
+                    grid-template-columns: 37% 37%;
+                    gap: 10%;
+                    justify-content: center;
+
+                    .playlist {
+    
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+    
+                        text-align: center;
+                        .playlistCover {
+                            width: 100%;
+                            margin-bottom: 5%;
+                        }
+                    }
+                }
+
+            }
+
+            .addPlaylist {
+                width: 100%;
+                background-color: #202020;
+                height: 6%;
+                border-radius: 2vw;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-left: 3%;
+
+                input {
+                    background-color: #202020;
+                    width: 72%;
+                    resize: none;
+                    border: none;
+                    color: #606060;
+                    font-size: 1vw;
+                    &::placeholder {
+                        color: #606060;
+                    }
+                    &:focus {
+                        outline: none;
+                    }
+                }
+
+                img {
+                    height: 50%;
+                    fill: #606060;
+                }
+
+                button {
+                    background-color: #1ED760;
+                    color: white;
+                    height: 100%;
+                    border: none;
+                    border-radius: 2vw;
+                    width: 20%;
+                    font-size: 1.1vw;
+                }
+            }   
+        }
+    }
+
+    .generateButton {
+        background-color: #1ED760;
+        color: white;
+        width: 12vw;
+        height: 3vw;
+        border-radius: 2vw;
+        border: none;
+        font-size: 1.1vw;
+    }
+}

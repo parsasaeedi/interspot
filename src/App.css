@@ -1,0 +1,243 @@
+@font-face {
+  font-family: Gotham;
+  src: url(./fonts/GothamMedium.otf);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-family: Gotham;
+}
+
+.header {
+  background-color: black;
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.header .interspotLogo {
+  width: 10vw;
+}
+
+.header .container {
+  background-color: #121212;
+  width: 85vw;
+  height: 75vh;
+  border-radius: 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.header .container .verticalLine {
+  border-left: 1px solid #202020;
+  height: 95%;
+}
+
+.header .container .content {
+  color: white;
+  width: 32%;
+  height: 85%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.header .container .content .name {
+  background-color: #202020;
+  border-radius: 2vw;
+  width: 30%;
+  height: 6%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.header .container .content .name input {
+  background-color: #202020;
+  max-width: 80%;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  resize: none;
+  border: none;
+  color: #606060;
+  font-size: 1.1vw;
+  text-align: center;
+}
+
+.header .container .content .name input::-webkit-input-placeholder {
+  color: #606060;
+}
+
+.header .container .content .name input:-ms-input-placeholder {
+  color: #606060;
+}
+
+.header .container .content .name input::-ms-input-placeholder {
+  color: #606060;
+}
+
+.header .container .content .name input::placeholder {
+  color: #606060;
+}
+
+.header .container .content .name input:focus {
+  outline: none;
+}
+
+.header .container .content .playlistsContainer {
+  background-color: #202020;
+  width: 100%;
+  height: 80%;
+  border-radius: 2vw;
+  padding: 5%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.header .container .content .playlistsContainer .playlistsWrapper {
+  height: 100%;
+  width: 100%;
+  overflow: scroll;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 37% 37%;
+      grid-template-columns: 37% 37%;
+  gap: 10%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.header .container .content .playlistsContainer .playlistsWrapper .playlist {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: center;
+}
+
+.header .container .content .playlistsContainer .playlistsWrapper .playlist .playlistCover {
+  width: 100%;
+  margin-bottom: 5%;
+}
+
+.header .container .content .addPlaylist {
+  width: 100%;
+  background-color: #202020;
+  height: 6%;
+  border-radius: 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 3%;
+}
+
+.header .container .content .addPlaylist input {
+  background-color: #202020;
+  width: 72%;
+  resize: none;
+  border: none;
+  color: #606060;
+  font-size: 1vw;
+}
+
+.header .container .content .addPlaylist input::-webkit-input-placeholder {
+  color: #606060;
+}
+
+.header .container .content .addPlaylist input:-ms-input-placeholder {
+  color: #606060;
+}
+
+.header .container .content .addPlaylist input::-ms-input-placeholder {
+  color: #606060;
+}
+
+.header .container .content .addPlaylist input::placeholder {
+  color: #606060;
+}
+
+.header .container .content .addPlaylist input:focus {
+  outline: none;
+}
+
+.header .container .content .addPlaylist img {
+  height: 50%;
+  fill: #606060;
+}
+
+.header .container .content .addPlaylist button {
+  background-color: #1ED760;
+  color: white;
+  height: 100%;
+  border: none;
+  border-radius: 2vw;
+  width: 20%;
+  font-size: 1.1vw;
+}
+
+.header .generateButton {
+  background-color: #1ED760;
+  color: white;
+  width: 12vw;
+  height: 3vw;
+  border-radius: 2vw;
+  border: none;
+  font-size: 1.1vw;
+}
+/*# sourceMappingURL=App.css.map */
