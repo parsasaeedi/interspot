@@ -55,7 +55,7 @@
   height: 95%;
 }
 
-.header .container .content {
+.header .container .playlistSelection, .header .container .signIn {
   color: white;
   width: 32%;
   height: 85%;
@@ -74,7 +74,7 @@
           justify-content: space-between;
 }
 
-.header .container .content .name {
+.header .container .playlistSelection .name, .header .container .signIn .name {
   background-color: #202020;
   border-radius: 2vw;
   width: 30%;
@@ -90,7 +90,7 @@
           align-items: center;
 }
 
-.header .container .content .name input {
+.header .container .playlistSelection .name input, .header .container .signIn .name input {
   background-color: #202020;
   max-width: 80%;
   width: -webkit-fit-content;
@@ -103,27 +103,34 @@
   text-align: center;
 }
 
-.header .container .content .name input::-webkit-input-placeholder {
+.header .container .playlistSelection .name input::-webkit-input-placeholder, .header .container .signIn .name input::-webkit-input-placeholder {
   color: #606060;
 }
 
-.header .container .content .name input:-ms-input-placeholder {
+.header .container .playlistSelection .name input:-ms-input-placeholder, .header .container .signIn .name input:-ms-input-placeholder {
   color: #606060;
 }
 
-.header .container .content .name input::-ms-input-placeholder {
+.header .container .playlistSelection .name input::-ms-input-placeholder, .header .container .signIn .name input::-ms-input-placeholder {
   color: #606060;
 }
 
-.header .container .content .name input::placeholder {
+.header .container .playlistSelection .name input::placeholder, .header .container .signIn .name input::placeholder {
   color: #606060;
 }
 
-.header .container .content .name input:focus {
+.header .container .playlistSelection .name input:focus, .header .container .signIn .name input:focus {
   outline: none;
 }
 
-.header .container .content .playlistsContainer {
+.header .container .playlistSelection .guide, .header .container .signIn .guide {
+  color: #606060;
+  font-size: 1.5vw;
+  text-align: center;
+  width: 70%;
+}
+
+.header .container .playlistSelection .playlistsContainer, .header .container .signIn .playlistsContainer {
   background-color: #202020;
   width: 100%;
   height: 80%;
@@ -137,7 +144,7 @@
           justify-content: center;
 }
 
-.header .container .content .playlistsContainer .playlistsWrapper {
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper, .header .container .signIn .playlistsContainer .playlistsWrapper {
   height: 100%;
   width: 100%;
   overflow: scroll;
@@ -151,7 +158,7 @@
           justify-content: center;
 }
 
-.header .container .content .playlistsContainer .playlistsWrapper .playlist {
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlist, .header .container .signIn .playlistsContainer .playlistsWrapper .playlist {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -165,12 +172,12 @@
   text-align: center;
 }
 
-.header .container .content .playlistsContainer .playlistsWrapper .playlist .playlistCover {
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlist .playlistCover, .header .container .signIn .playlistsContainer .playlistsWrapper .playlist .playlistCover {
   width: 100%;
   margin-bottom: 5%;
 }
 
-.header .container .content .addPlaylist {
+.header .container .playlistSelection .addPlaylist, .header .container .playlistSelection .linkProfile, .header .container .signIn .addPlaylist, .header .container .signIn .linkProfile {
   width: 100%;
   background-color: #202020;
   height: 6%;
@@ -187,7 +194,7 @@
   padding-left: 3%;
 }
 
-.header .container .content .addPlaylist input {
+.header .container .playlistSelection .addPlaylist input, .header .container .playlistSelection .linkProfile input, .header .container .signIn .addPlaylist input, .header .container .signIn .linkProfile input {
   background-color: #202020;
   width: 72%;
   resize: none;
@@ -196,32 +203,32 @@
   font-size: 1vw;
 }
 
-.header .container .content .addPlaylist input::-webkit-input-placeholder {
+.header .container .playlistSelection .addPlaylist input::-webkit-input-placeholder, .header .container .playlistSelection .linkProfile input::-webkit-input-placeholder, .header .container .signIn .addPlaylist input::-webkit-input-placeholder, .header .container .signIn .linkProfile input::-webkit-input-placeholder {
   color: #606060;
 }
 
-.header .container .content .addPlaylist input:-ms-input-placeholder {
+.header .container .playlistSelection .addPlaylist input:-ms-input-placeholder, .header .container .playlistSelection .linkProfile input:-ms-input-placeholder, .header .container .signIn .addPlaylist input:-ms-input-placeholder, .header .container .signIn .linkProfile input:-ms-input-placeholder {
   color: #606060;
 }
 
-.header .container .content .addPlaylist input::-ms-input-placeholder {
+.header .container .playlistSelection .addPlaylist input::-ms-input-placeholder, .header .container .playlistSelection .linkProfile input::-ms-input-placeholder, .header .container .signIn .addPlaylist input::-ms-input-placeholder, .header .container .signIn .linkProfile input::-ms-input-placeholder {
   color: #606060;
 }
 
-.header .container .content .addPlaylist input::placeholder {
+.header .container .playlistSelection .addPlaylist input::placeholder, .header .container .playlistSelection .linkProfile input::placeholder, .header .container .signIn .addPlaylist input::placeholder, .header .container .signIn .linkProfile input::placeholder {
   color: #606060;
 }
 
-.header .container .content .addPlaylist input:focus {
+.header .container .playlistSelection .addPlaylist input:focus, .header .container .playlistSelection .linkProfile input:focus, .header .container .signIn .addPlaylist input:focus, .header .container .signIn .linkProfile input:focus {
   outline: none;
 }
 
-.header .container .content .addPlaylist img {
+.header .container .playlistSelection .addPlaylist img, .header .container .playlistSelection .linkProfile img, .header .container .signIn .addPlaylist img, .header .container .signIn .linkProfile img {
   height: 50%;
   fill: #606060;
 }
 
-.header .container .content .addPlaylist button {
+.header .container .playlistSelection .addPlaylist button, .header .container .playlistSelection .linkProfile button, .header .container .signIn .addPlaylist button, .header .container .signIn .linkProfile button {
   background-color: #1ED760;
   color: white;
   height: 100%;
@@ -231,7 +238,7 @@
   font-size: 1.1vw;
 }
 
-.header .generateButton {
+.header .mainButton {
   background-color: #1ED760;
   color: white;
   width: 12vw;

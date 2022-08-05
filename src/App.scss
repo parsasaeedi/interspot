@@ -38,7 +38,7 @@
             height: 95%
         }
 
-        .content {
+        .playlistSelection, .signIn {
             color: white;
             width: 32%;
             height: 85%;
@@ -73,6 +73,13 @@
                         outline: none;
                     }
                 }
+            }
+
+            .guide {
+                color: #606060;
+                font-size: 1.5vw;
+                text-align: center;
+                width: 70%;
             }
 
             .playlistsContainer {
@@ -110,7 +117,7 @@
 
             }
 
-            .addPlaylist {
+            .addPlaylist, .linkProfile {
                 width: 100%;
                 background-color: #202020;
                 height: 6%;
@@ -153,7 +160,7 @@
         }
     }
 
-    .generateButton {
+    .mainButton {
         background-color: #1ED760;
         color: white;
         width: 12vw;
