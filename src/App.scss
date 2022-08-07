@@ -155,8 +155,19 @@
                     border-radius: 2vw;
                     width: 20%;
                     font-size: 1.1vw;
+                    cursor: pointer;
                 }
             }   
+            button {
+                background-color: #1ED760;
+                color: white;
+                height: 6%;
+                border: none;
+                border-radius: 2vw;
+                width: 20%;
+                font-size: 1.1vw;
+                cursor: pointer;
+            }
         }
     }
 
@@ -168,5 +179,6 @@
         border-radius: 2vw;
         border: none;
         font-size: 1.1vw;
+        cursor: pointer;
     }
 }

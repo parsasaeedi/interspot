@@ -236,6 +236,18 @@
   border-radius: 2vw;
   width: 20%;
   font-size: 1.1vw;
+  cursor: pointer;
+}
+
+.header .container .playlistSelection button, .header .container .signIn button {
+  background-color: #1ED760;
+  color: white;
+  height: 6%;
+  border: none;
+  border-radius: 2vw;
+  width: 20%;
+  font-size: 1.1vw;
+  cursor: pointer;
 }
 
 .header .mainButton {
@@ -246,5 +258,6 @@
   border-radius: 2vw;
   border: none;
   font-size: 1.1vw;
+  cursor: pointer;
 }
 /*# sourceMappingURL=App.css.map */

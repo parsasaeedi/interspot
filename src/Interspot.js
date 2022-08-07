@@ -1,49 +1,142 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PlaylistSelection from './PlaylistSelection'
 import SignIn from './SignIn'
 
 export default function Interspot() {
-    const [name1, setName1] = useState("")
-    const [name2, setName2] = useState("")
-    const [spotifyId1, setSpotifyId1] = useState("")
-    const [spotifyId2, setSpotifyId2] = useState("")
-    const [linkedSpotifyId1, setLinkedSpotifyId1] = useState("")
-    const [linkedSpotifyId2, setLinkedSpotifyId2] = useState("")
+    // states
+    const [name1, setName1] = useState(sessionStorage.getItem('name1') ?? "")
+    const [name2, setName2] = useState(sessionStorage.getItem('name2') ?? "")
     const [page, setPage] = useState("signIn")
     const [selectedPlaylists1, setSelectedPlaylists1] = useState([])
     const [selectedPlaylists2, setSelectedPlaylists2] = useState([])
+    const [access_token1, setAccess_token1] = useState(sessionStorage.getItem('access_token1') ?? "")
+    const [access_token2, setAccess_token2] = useState(sessionStorage.getItem('access_token2') ?? "")
+    const [whoAsked, setWhoAsked] = useState(sessionStorage.getItem('whoAsked') ?? "")
 
-    let button = page=="signIn" ? "CONTINUE" : "GENERATE";
 
+
+    let redirect_uri = "http://10.0.0.17:3000/";
+    let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
+    let client_secret = "636fe3d7e2ee4e7087c2e1f7579a3e06"
+    const AUTHORIZE = "https://accounts.spotify.com/authorize"
+    const TOKEN = "https://accounts.spotify.com/api/token";
+    const PLAYLISTS = "https://api.spotify.com/v1/me/playlists";
+
+    function requestAuthorization() {
+        let url = AUTHORIZE;
+        url += "?client_id=" + client_id;
+        url += "&response_type=code";
+        url += "&redirect_uri=" + encodeURI(redirect_uri);
+        url += "&show_dialog=true";
+        url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
+        window.location.href = url; // Show Spotify's authorization screen
+    }
+
+    function onPageLoad() {
+        if ( window.location.search.length > 0 ){
+            handleRedirect();
+        }
+    }
+
+    function handleRedirect(){
+        let code = getCode();
+        fetchAccessToken( code );
+        window.history.pushState("", "", redirect_uri); // remove param from url
+    }
+
+    function getCode(){
+        let code = null;
+        const queryString = window.location.search;
+        if ( queryString.length > 0 ){
+            const urlParams = new URLSearchParams(queryString);
+            code = urlParams.get('code')
+        }
+        return code;
+    }
+
+    function fetchAccessToken( code ){
+        let body = "grant_type=authorization_code";
+        body += "&code=" + code; 
+        body += "&redirect_uri=" + encodeURI(redirect_uri);
+        body += "&client_id=" + client_id;
+        body += "&client_secret=" + client_secret;
+        callAuthorizationApi(body);
+    }
+
+    function callAuthorizationApi(body){
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", TOKEN, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Authorization', 'Basic ' + btoa(client_id + ":" + client_secret));
+        xhr.send(body);
+        xhr.onload = handleAuthorizationResponse;
+    }
+
+    function handleAuthorizationResponse(){
+        if ( this.status == 200 ){
+            var data = JSON.parse(this.responseText);
+            console.log(data);
+            var data = JSON.parse(this.responseText);
+            if ( data.access_token != undefined ){
+                if (whoAsked === "left") {
+                    setAccess_token1(data.access_token);
+                    alert("1");
+                } else {
+                    alert("2");
+                }
+            }
+            onPageLoad();
+        }
+        else {
+            console.log(this.responseText);
+            alert(this.responseText);
+        }
+    }
+    
+
+    // Spotify API
+    let SpotifyWebApi = require('spotify-web-api-js');
+    let spotifyApi = new SpotifyWebApi();
+
+    // event handlers
     const handleChangeName1 = ({target}) => setName1(target.value)
     const handleChangeName2 = ({target}) => setName2(target.value)
-
-    const handleChangeSpotifyId1 = ({target}) => setSpotifyId1(target.value)
-    const handleChangeSpotifyId2 = ({target}) => setSpotifyId2(target.value)
-
     const handleLinkButton1 = ({target}) => {
         // Do stuff
-        setLinkedSpotifyId1(target.value)
+        sessionStorage.setItem('name1', name1);
+        sessionStorage.setItem('name2', name2);
+        sessionStorage.setItem('access_token1', access_token1);
+        sessionStorage.setItem('access_token2', access_token2);
+        sessionStorage.setItem('whoAsked', "left");
+        requestAuthorization();
     }
     const handleLinkButton2 = ({target}) => {
+        sessionStorage.setItem('name1', name1);
+        sessionStorage.setItem('name2', name2);
+        sessionStorage.setItem('access_token2', access_token2);
+        sessionStorage.setItem('whoAsked', "right");
+        requestAuthorization();
         // Do stuff
-        setLinkedSpotifyId2(target.value)
     }
-
-    let leftContent, rightContent;
-
-    if (page == "signIn") {
-        leftContent = <SignIn name={name1} handleChangeName={handleChangeName1} placeholder="user1" spotifyId={spotifyId1} handleChangeSpotifyId={handleChangeSpotifyId1} handleLinkButton={handleLinkButton1}/>;
-        rightContent = <SignIn name={name2} handleChangeName={handleChangeName2} placeholder="user2" spotifyId={spotifyId2} handleChangeSpotifyId={handleChangeSpotifyId2} handleLinkButton={handleLinkButton2}/>
-    } else if (page == "playlistSelection") {
-        leftContent = <PlaylistSelection spotifyId={spotifyId1} name={name1} handleChangeName={handleChangeName1} placeholder="user1"/>
-        rightContent = <PlaylistSelection spotifyId={spotifyId2} name={name2} handleChangeName={handleChangeName2} placeholder="user2"/>
-    }
-
     const handleMainButton = () => {
-        if (page == "signIn") {
+        if (page === "signIn") {
             setPage("playlistSelection")
         }
+    }
+
+    useEffect(() => {
+        onPageLoad();
+    })
+
+    // UI
+    let button = page==="signIn" ? "CONTINUE" : "GENERATE";
+    let leftContent, rightContent;
+    if (page === "signIn") {
+        leftContent = <SignIn name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1}/>;
+        rightContent = <SignIn name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2}/>
+    } else if (page === "playlistSelection") {
+        leftContent = <PlaylistSelection name={name1} handleChangeName={handleChangeName1} placeholder="user1"/>
+        rightContent = <PlaylistSelection name={name2} handleChangeName={handleChangeName2} placeholder="user2"/>
     }
 
     return(
