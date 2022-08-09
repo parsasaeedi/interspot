@@ -1,0 +1,24 @@
+{
+    "country":"CA",
+    "display_name":"Parsa",
+    "email":"psaeedi1381@gmail.com",
+    "explicit_content":{
+       "filter_enabled":false,
+       "filter_locked":false
+    },
+    "external_urls":{
+       "spotify":"https://open.spotify.com/user/nqj0pqu1inr0vneln5xscun8r"
+    },
+    "followers":{
+       "href":null,
+       "total":5
+    },
+    "href":"https://api.spotify.com/v1/users/nqj0pqu1inr0vneln5xscun8r",
+    "id":"nqj0pqu1inr0vneln5xscun8r",
+    "images":[
+       
+    ],
+    "product":"premium",
+    "type":"user",
+    "uri":"spotify:user:nqj0pqu1inr0vneln5xscun8r"
+}

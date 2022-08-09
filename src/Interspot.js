@@ -7,6 +7,8 @@ export default function Interspot() {
     const [name1, setName1] = useState(sessionStorage.getItem('name1') ?? "")
     const [name2, setName2] = useState(sessionStorage.getItem('name2') ?? "")
     const [page, setPage] = useState("signIn")
+    const [playlists1, setplaylists1] = useState([])
+    const [playlists2, setplaylists2] = useState([])
     const [selectedPlaylists1, setSelectedPlaylists1] = useState([])
     const [selectedPlaylists2, setSelectedPlaylists2] = useState([])
     const [access_token1, setAccess_token1] = useState(sessionStorage.getItem('access_token1') ?? "")
@@ -80,23 +82,24 @@ export default function Interspot() {
             if ( data.access_token != undefined ){
                 if (whoAsked === "left") {
                     setAccess_token1(data.access_token);
-                    alert("1");
+                    spotifyApi1.setAccessToken(data.access_token);
                 } else {
-                    alert("2");
+                    setAccess_token2(data.access_token);
+                    spotifyApi2.setAccessToken(data.access_token);
                 }
             }
             onPageLoad();
         }
         else {
             console.log(this.responseText);
-            alert(this.responseText);
         }
     }
     
 
     // Spotify API
     let SpotifyWebApi = require('spotify-web-api-js');
-    let spotifyApi = new SpotifyWebApi();
+    let spotifyApi1 = new SpotifyWebApi();
+    let spotifyApi2 = new SpotifyWebApi();
 
     // event handlers
     const handleChangeName1 = ({target}) => setName1(target.value)
@@ -113,6 +116,7 @@ export default function Interspot() {
     const handleLinkButton2 = ({target}) => {
         sessionStorage.setItem('name1', name1);
         sessionStorage.setItem('name2', name2);
+        sessionStorage.setItem('access_token1', access_token1);
         sessionStorage.setItem('access_token2', access_token2);
         sessionStorage.setItem('whoAsked', "right");
         requestAuthorization();
@@ -120,10 +124,56 @@ export default function Interspot() {
     }
     const handleMainButton = () => {
         if (page === "signIn") {
+            // Add stuff
             setPage("playlistSelection")
         }
     }
 
+    let profilePicture1;
+    if (access_token1 != "") {
+        spotifyApi1.setAccessToken(access_token1);
+        // spotifyApi1.getMe()
+        let total;
+        let playlist1 = [];
+        spotifyApi1.getUserPlaylists({ limit: 50 })
+        .then(
+            function (data) {
+                if (data != null) {
+                    for (var key in data.items) {
+                        // console.log(data.items[key].name);
+                        playlist1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
+                    }
+                    total = data.total
+                }
+            },
+            function (err) {
+                console.error(err);
+            }
+        ).then(
+            function() {
+                for (let i=0; i<Math.ceil((total-50)/50); i++) {
+                    spotifyApi1.getUserPlaylists({ limit: 50, offset: (i+1)*50})
+                    .then(
+                        function (data) {
+                            if (data != null) {
+                                for (var key in data.items) {
+                                    // console.log(data.items[key].name);
+                                    playlist1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
+                                }
+                            }
+                        },
+                        function (err) {
+                            console.error(err);
+                        }
+                    ).then(
+                        function() {
+                            console.log(playlist1.length)
+                        }
+                    )
+                }
+            }
+        )
+    } 
     useEffect(() => {
         onPageLoad();
     })
@@ -146,6 +196,7 @@ export default function Interspot() {
                 {leftContent}
                 <div className="verticalLine"></div>
                 {rightContent}
+                {profilePicture1}
             </div>
             <button className='mainButton' onClick={handleMainButton}>{button}</button>
         </div>
