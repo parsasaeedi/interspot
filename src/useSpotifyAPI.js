@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates) {
 
     let redirect_uri = "http://10.0.0.17:3000/";
     let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
@@ -53,6 +53,16 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
         xhr.setRequestHeader('Authorization', 'Basic ' + btoa(client_id + ":" + client_secret));
         xhr.send(body);
         xhr.onload = handleAuthorizationResponse;
+    }
+
+    const requestAuthorization = () => {
+        let url = AUTHORIZE;
+        url += "?client_id=" + client_id;
+        url += "&response_type=code";
+        url += "&redirect_uri=" + encodeURI(redirect_uri);
+        url += "&show_dialog=true";
+        url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
+        window.location.href = url; // Show Spotify's authorization screen
     }
     
     function handleAuthorizationResponse(){
@@ -159,7 +169,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
         } 
     }
 
-    return null;
+    return requestAuthorization;
 
 }
     

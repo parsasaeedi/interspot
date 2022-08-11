@@ -32,47 +32,37 @@ export default function Interspot() {
     let spotifyApi1 = new SpotifyWebApi();
     let spotifyApi2 = new SpotifyWebApi();
 
-    useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2);
-    
+    function storeStates() {
+        sessionStorage.setItem('name1', name1);
+        sessionStorage.setItem('name2', name2);
+        sessionStorage.setItem('access_token1', access_token1);
+        sessionStorage.setItem('access_token2', access_token2);
+        sessionStorage.setItem('signedIn1', signedIn1);
+        sessionStorage.setItem('signedIn2', signedIn2);
+        sessionStorage.setItem('profilePicture1', profilePicture1);
+        sessionStorage.setItem('profilePicture2', profilePicture2);
+    }
+
+    useEffect(() => {
+        storeStates()
+    }, [name1, name2, access_token1, access_token2, signedIn1, signedIn2, profilePicture1, profilePicture2])
+
+    const requestAuthorization = useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates);
 
     // event handlers
     const handleChangeName1 = ({target}) => setName1(target.value)
     const handleChangeName2 = ({target}) => setName2(target.value)
     const handleLinkButton1 = ({target}) => {
-        // Do stuff
-        sessionStorage.setItem('name1', name1);
-        sessionStorage.setItem('name2', name2);
-        sessionStorage.setItem('access_token1', access_token1);
-        sessionStorage.setItem('access_token2', access_token2);
-        sessionStorage.setItem('signedIn1', signedIn1);
-        sessionStorage.setItem('signedIn2', signedIn2);
-        sessionStorage.setItem('profilePicture1', profilePicture1);
-        sessionStorage.setItem('profilePicture2', profilePicture2);
+        storeStates()
         sessionStorage.setItem('whoAsked', "left");
         requestAuthorization();
+        // Do stuff
     }
     const handleLinkButton2 = ({target}) => {
-        sessionStorage.setItem('name1', name1);
-        sessionStorage.setItem('name2', name2);
-        sessionStorage.setItem('access_token1', access_token1);
-        sessionStorage.setItem('access_token2', access_token2);
-        sessionStorage.setItem('signedIn1', signedIn1);
-        sessionStorage.setItem('signedIn2', signedIn2);
-        sessionStorage.setItem('profilePicture1', profilePicture1);
-        sessionStorage.setItem('profilePicture2', profilePicture2);
+        storeStates()
         sessionStorage.setItem('whoAsked', "right");
         requestAuthorization();
         // Do stuff
-    }
-
-    const requestAuthorization = () => {
-        let url = AUTHORIZE;
-        url += "?client_id=" + client_id;
-        url += "&response_type=code";
-        url += "&redirect_uri=" + encodeURI(redirect_uri);
-        url += "&show_dialog=true";
-        url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
-        window.location.href = url; // Show Spotify's authorization screen
     }
 
     // UI
