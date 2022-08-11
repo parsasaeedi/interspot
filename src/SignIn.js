@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 
 export default function SignIn(props) {
+
+    let center = props.signedIn ? <img className="profilePicture" src={props.profilePicture} alt="Profile Picture" /> : <span className='guide'>Link your Spotify profile to select its playlists</span>
+
     return(
         <div className="signIn">
             <div className="name"><input type="text" className="name1" id="name1" spellCheck="false" value={props.name} onChange={props.handleChangeName} placeholder={props.placeholder}/></div>
-            <span className='guide'>Link your Spotify profile to select its playlists</span>
+            {center}
             <button onClick={props.handleLinkButton}>LINK</button>
         </div>
     )
