@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PlaylistSelection from './PlaylistSelection'
 import SignIn from './SignIn'
 import useSpotifyAPI from './useSpotifyAPI';
+import MainButton from './MainButton';
 
 export default function Interspot() {
     let redirect_uri = "http://10.0.0.17:3000/";
@@ -63,12 +64,6 @@ export default function Interspot() {
         requestAuthorization();
         // Do stuff
     }
-    const handleMainButton = () => {
-        if (page === "signIn") {
-            // Add stuff
-            setPage("playlistSelection")
-        }
-    }
 
     const requestAuthorization = () => {
         let url = AUTHORIZE;
@@ -80,13 +75,7 @@ export default function Interspot() {
         window.location.href = url; // Show Spotify's authorization screen
     }
 
-
-    // useEffect(() => {
-    //     // onPageLoad();
-    // })
-
     // UI
-    let button = page==="signIn" ? "CONTINUE" : "GENERATE";
     let leftContent, rightContent;
     if (page === "signIn") {
         leftContent = <SignIn signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1}/>;
@@ -104,7 +93,7 @@ export default function Interspot() {
                 <div className="verticalLine"></div>
                 {rightContent}
             </div>
-            <button className='mainButton' onClick={handleMainButton}>{button}</button>
+            <MainButton page={page} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2}/>
         </div>
     )
 }
