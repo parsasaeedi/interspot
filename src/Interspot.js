@@ -3,6 +3,7 @@ import PlaylistSelection from './PlaylistSelection'
 import SignIn from './SignIn'
 import useSpotifyAPI from './useSpotifyAPI';
 import MainButton from './MainButton';
+import Content from './Content';
 
 export default function Interspot() {
     let redirect_uri = "http://10.0.0.17:3000/";
@@ -20,12 +21,16 @@ export default function Interspot() {
     const [signedIn2, setSignedIn2] = useState(sessionStorage.getItem('signedIn2') ?? "")
     const [profilePicture1, setProfilePicture1] = useState(sessionStorage.getItem('profilePicture1') ?? "")
     const [profilePicture2, setProfilePicture2] = useState(sessionStorage.getItem('profilePicture2') ?? "")
-
     const [playlists1, setPlaylists1] = useState([])
     const [playlists2, setPlaylists2] = useState([])
     const [access_token1, setAccess_token1] = useState(sessionStorage.getItem('access_token1') ?? "")
     const [access_token2, setAccess_token2] = useState(sessionStorage.getItem('access_token2') ?? "")
     const [whoAsked, setWhoAsked] = useState(sessionStorage.getItem('whoAsked') ?? "")
+
+    useEffect(() => {
+        storeStates()
+    }, [name1, name2, access_token1, access_token2, signedIn1, signedIn2, profilePicture1, profilePicture2])
+
 
     // Spotify API
     let SpotifyWebApi = require('spotify-web-api-js');
@@ -42,10 +47,6 @@ export default function Interspot() {
         sessionStorage.setItem('profilePicture1', profilePicture1);
         sessionStorage.setItem('profilePicture2', profilePicture2);
     }
-
-    useEffect(() => {
-        storeStates()
-    }, [name1, name2, access_token1, access_token2, signedIn1, signedIn2, profilePicture1, profilePicture2])
 
     const requestAuthorization = useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates);
 
@@ -65,25 +66,15 @@ export default function Interspot() {
         // Do stuff
     }
 
-    // UI
-    let leftContent, rightContent;
-    if (page === "signIn") {
-        leftContent = <SignIn signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1}/>;
-        rightContent = <SignIn signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2}/>
-    } else if (page === "playlistSelection") {
-        leftContent = <PlaylistSelection name={name1} handleChangeName={handleChangeName1} placeholder="user1"/>
-        rightContent = <PlaylistSelection name={name2} handleChangeName={handleChangeName2} placeholder="user2"/>
-    }
-
     return(
         <div className="header">
             <img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" />
             <div className="container">
-                {leftContent}
+                <Content page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1}/>
                 <div className="verticalLine"></div>
-                {rightContent}
+                <Content page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2}/>
             </div>
-            <MainButton page={page} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2}/>
+            <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2}/>
         </div>
     )
 }
