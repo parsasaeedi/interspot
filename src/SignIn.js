@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export default function SignIn(props) {
 
-    let center = props.signedIn ? <img className="profilePicture" src={props.profilePicture} alt="Profile Picture" /> : <span className='guide'>Link your Spotify profile to select its playlists</span>
+    let center = props.signedIn ? <img className="profilePicture" src={props.profilePicture}/> : <span className='guide'>Link your Spotify profile to select its playlists</span>
 
     return(
         <div className="signIn">
