@@ -4,8 +4,14 @@ export default function Playlist(props) {
     const [selected, setSelected] = useState(false);
 
     const handleClick = () => {
+        if (selected) {
+            props.setSelectedPlaylists((prev) => {
+                return prev.filter(id => id !== props.id)
+            })
+        } else {
+            props.setSelectedPlaylists([...props.selectedPlaylists, props.id])
+        }
         setSelected(!selected)
-        props.setSelectedPlaylists([...props.selectedPlaylists, props.id])
     }
 
     let className = selected ? "playlistSelected" : "playlist"
