@@ -11,8 +11,6 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
 
     useEffect(() => {
         onPageLoad()
-        getPlaylists1()
-        getPlaylists2()
     }, [])
     
     function onPageLoad() {
@@ -74,11 +72,13 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
                 if (whoAsked === "left") {
                     setAccess_token1(data.access_token);
                     spotifyApi1.setAccessToken(data.access_token);
+                    getPlaylists1()
                     setAccountInfo("left")
                     setSignedIn1(true)
                 } else {
                     setAccess_token2(data.access_token);
                     spotifyApi2.setAccessToken(data.access_token);
+                    getPlaylists2()
                     setAccountInfo("right")
                     setSignedIn2(true)
                 }
@@ -124,97 +124,93 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
     }
 
     function getPlaylists1() {
-        if (access_token1 != "") {
-            spotifyApi1.setAccessToken(access_token1);
-            let total;
-            let tempPlaylist1 = [];
-            spotifyApi1.getUserPlaylists({ limit: 50 })
-            .then(
-                function (data) {
-                    if (data != null) {
-                        for (var key in data.items) {
-                            // console.log(data.items[key].name);
-                            tempPlaylist1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
-                        }
-                        total = data.total
+        // spotifyApi1.setAccessToken(access_token1);
+        let total;
+        let tempPlaylists1 = [];
+        spotifyApi1.getUserPlaylists({ limit: 50 })
+        .then(
+            function (data) {
+                if (data != null) {
+                    for (var key in data.items) {
+                        // console.log(data.items[key].name);
+                        tempPlaylists1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
                     }
-                },
-                function (err) {
-                    console.error(err);
+                    total = data.total
                 }
-            ).then(
-                function() {
-                    for (let i=0; i<Math.ceil((total-50)/50); i++) {
-                        spotifyApi1.getUserPlaylists({ limit: 50, offset: (i+1)*50})
-                        .then(
-                            function (data) {
-                                if (data != null) {
-                                    for (var key in data.items) {
-                                        // console.log(data.items[key].name);
-                                        tempPlaylist1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
-                                    }
+            },
+            function (err) {
+                console.error(err);
+            }
+        ).then(
+            function() {
+                for (let i=0; i<Math.ceil((total-50)/50); i++) {
+                    spotifyApi1.getUserPlaylists({ limit: 50, offset: (i+1)*50})
+                    .then(
+                        function (data) {
+                            if (data != null) {
+                                for (var key in data.items) {
+                                    // console.log(data.items[key].name);
+                                    tempPlaylists1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
                                 }
-                            },
-                            function (err) {
-                                console.error(err);
                             }
-                        ).then(
-                            function() {
-                                setPlaylists1(tempPlaylist1)
-                                // console.log(playlists1)
-                            }
-                        )
-                    }
+                        },
+                        function (err) {
+                            console.error(err);
+                        }
+                    ).then(
+                        function() {
+                            setPlaylists1(tempPlaylists1)
+                            console.log(tempPlaylists1)
+                        }
+                    )
                 }
-            )
-        } 
+            }
+        )
     }
 
     function getPlaylists2() {
-        if (access_token2 != "") {
-            spotifyApi2.setAccessToken(access_token2);
-            let total;
-            let tempPlaylist2 = [];
-            spotifyApi2.getUserPlaylists({ limit: 50 })
-            .then(
-                function (data) {
-                    if (data != null) {
-                        for (var key in data.items) {
-                            // console.log(data.items[key].name);
-                            tempPlaylist2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
-                        }
-                        total = data.total
+        // spotifyApi2.setAccessToken(access_token2);
+        let total;
+        let tempPlaylists2 = [];
+        spotifyApi2.getUserPlaylists({ limit: 50 })
+        .then(
+            function (data) {
+                if (data != null) {
+                    for (var key in data.items) {
+                        // console.log(data.items[key].name);
+                        tempPlaylists2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
                     }
-                },
-                function (err) {
-                    console.error(err);
+                    total = data.total
                 }
-            ).then(
-                function() {
-                    for (let i=0; i<Math.ceil((total-50)/50); i++) {
-                        spotifyApi2.getUserPlaylists({ limit: 50, offset: (i+1)*50})
-                        .then(
-                            function (data) {
-                                if (data != null) {
-                                    for (var key in data.items) {
-                                        // console.log(data.items[key].name);
-                                        tempPlaylist2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
-                                    }
+            },
+            function (err) {
+                console.error(err);
+            }
+        ).then(
+            function() {
+                for (let i=0; i<Math.ceil((total-50)/50); i++) {
+                    spotifyApi2.getUserPlaylists({ limit: 50, offset: (i+1)*50})
+                    .then(
+                        function (data) {
+                            if (data != null) {
+                                for (var key in data.items) {
+                                    // console.log(data.items[key].name);
+                                    tempPlaylists2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
                                 }
-                            },
-                            function (err) {
-                                console.error(err);
                             }
-                        ).then(
-                            function() {
-                                setPlaylists2(tempPlaylist2)
-                                // console.log(playlists2)
-                            }
-                        )
-                    }
+                        },
+                        function (err) {
+                            console.error(err);
+                        }
+                    ).then(
+                        function() {
+                            setPlaylists2(tempPlaylists2)
+                            console.log(tempPlaylists2)
+                        }
+                    )
                 }
-            )
-        } 
+            }
+        )
     }
 
     return requestAuthorization;

@@ -21,15 +21,15 @@ export default function Interspot() {
     const [signedIn2, setSignedIn2] = useState(sessionStorage.getItem('signedIn2') ?? "")
     const [profilePicture1, setProfilePicture1] = useState(sessionStorage.getItem('profilePicture1') ?? "")
     const [profilePicture2, setProfilePicture2] = useState(sessionStorage.getItem('profilePicture2') ?? "")
-    const [playlists1, setPlaylists1] = useState([])
-    const [playlists2, setPlaylists2] = useState([])
+    const [playlists1, setPlaylists1] = useState(JSON.parse(sessionStorage.getItem('playlists1')) ?? [])
+    const [playlists2, setPlaylists2] = useState(JSON.parse(sessionStorage.getItem('playlists2')) ?? [])
     const [access_token1, setAccess_token1] = useState(sessionStorage.getItem('access_token1') ?? "")
     const [access_token2, setAccess_token2] = useState(sessionStorage.getItem('access_token2') ?? "")
     const [whoAsked, setWhoAsked] = useState(sessionStorage.getItem('whoAsked') ?? "")
 
     useEffect(() => {
         storeStates()
-    }, [name1, name2, access_token1, access_token2, signedIn1, signedIn2, profilePicture1, profilePicture2])
+    }, [name1, name2, access_token1, access_token2, signedIn1, signedIn2, profilePicture1, profilePicture2, playlists1, playlists2])
 
 
     // Spotify API
@@ -46,6 +46,8 @@ export default function Interspot() {
         sessionStorage.setItem('signedIn2', signedIn2);
         sessionStorage.setItem('profilePicture1', profilePicture1);
         sessionStorage.setItem('profilePicture2', profilePicture2);
+        sessionStorage.setItem('playlists1', JSON.stringify(playlists1));
+        sessionStorage.setItem('playlists2', JSON.stringify(playlists2));
     }
 
     const requestAuthorization = useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates);
