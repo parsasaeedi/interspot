@@ -11,7 +11,7 @@ export default function MainButton(props) {
     }
 
     let button
-    if (!(props.signedIn1 && props.signedIn1)) {
+    if (!(props.signedIn1 && props.signedIn2)) {
         button = <button className='mainButton' onClick={handleClick} disabled>{buttonText}</button>
     } else {
         button = <button className='mainButton' onClick={handleClick}>{buttonText}</button>
