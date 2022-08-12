@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Playlist from './Playlist';
 
 export default function PlaylistSelection(props) {
 
@@ -18,7 +19,7 @@ export default function PlaylistSelection(props) {
                     <div className="playlist"><img src="/img/playlist3.png" alt="playlist3" className="playlistCover" /><span className="playlistName">playlist3</span></div>
                     <div className="playlist"><img src="/img/playlist4.png" alt="playlist4" className="playlistCover" /><span className="playlistName">playlist4</span></div> */}
                     {props.playlists.length > 0 && props.playlists.map(({name, id, cover}) => (
-                        <div className="playlist"><img src={cover} alt={name} className="playlistCover" /><span className="playlistName">{name}</span></div>
+                        <Playlist name={name} id={id} cover={cover} selectedPlaylists={props.selectedPlaylists} setSelectedPlaylists={props.setSelectedPlaylists}/>
                     ))}
                 </div>
             </div>

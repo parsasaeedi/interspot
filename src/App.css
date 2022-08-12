@@ -185,6 +185,28 @@
   margin-bottom: 5%;
 }
 
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistSelected, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistSelected {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: center;
+  background-color: #1ED760;
+  padding: 5%;
+  border-radius: 4%;
+}
+
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistSelected .playlistCover, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistSelected .playlistCover {
+  width: 100%;
+  margin-bottom: 5%;
+}
+
 .header .container .playlistSelection .addPlaylist, .header .container .playlistSelection .linkProfile, .header .container .signIn .addPlaylist, .header .container .signIn .linkProfile {
   width: 100%;
   background-color: #202020;
