@@ -6,10 +6,10 @@ export default function MainButton(props) {
     const handleClick = () => {
         if (props.page === "signIn") {
             props.setPage("playlistSelection")
+        } else if (props.page === "playlistSelection") {
+            props.generateIntersection();
         }
     }
-
-    console.log(props.selectedPlaylists1)
 
     let button
     if (props.page === "signIn") {

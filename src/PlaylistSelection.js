@@ -3,7 +3,7 @@ import Playlist from './Playlist';
 
 export default function PlaylistSelection(props) {
 
-    console.log(props.playlists)
+    // console.log(props.playlists)
 
     return(
         <div className="playlistSelection">

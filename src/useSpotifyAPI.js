@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2) {
 
     let redirect_uri = "http://10.0.0.17:3000/";
     let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
@@ -66,7 +66,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
     function handleAuthorizationResponse(){
         if ( this.status == 200 ){
             var data = JSON.parse(this.responseText);
-            console.log(data);
+            // console.log(data);
             var data = JSON.parse(this.responseText);
             if ( data.access_token != undefined ){
                 if (whoAsked === "left") {
@@ -157,13 +157,12 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
                         function (err) {
                             console.error(err);
                         }
-                    ).then(
-                        function() {
-                            setPlaylists1(tempPlaylists1)
-                            console.log(tempPlaylists1)
-                        }
                     )
                 }
+            }
+        ).then(
+            function() {
+                setPlaylists1(tempPlaylists1)
             }
         )
     }
@@ -202,18 +201,102 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
                         function (err) {
                             console.error(err);
                         }
-                    ).then(
-                        function() {
-                            setPlaylists2(tempPlaylists2)
-                            console.log(tempPlaylists2)
-                        }
                     )
                 }
+            }
+        ).then(
+            function() {
+                setPlaylists2(tempPlaylists2)
             }
         )
     }
 
-    return requestAuthorization;
+    const getNextPlaylist = async (next, songs) => {
+        await spotifyApi1.getGeneric(next)
+        .then(
+            async function (data) {
+                if (data != null) {
+                    console.log(data)
+                    for (var song in data.items) {
+                        songs.push(data.items[song].track.id)
+                    }
+                    next = data.next
+                    if (next != null) {
+                        await getNextPlaylist(next, songs)
+                    } else {
+                        // console.log(songs.length)
+                    }
+                }
+                return new Promise((resolve, reject) => {
+                    resolve()
+                })
+            },
+            function (err) {
+                console.error(err);
+            }
+        )
+    }
+
+    async function generateIntersection() {
+        spotifyApi1.setAccessToken(access_token1);
+        spotifyApi2.setAccessToken(access_token2);
+        let leftSongs = [];
+        let rightSongs = [];
+        let leftPromises =  Promise.all(selectedPlaylists1.map(async (playlist) => {
+            await spotifyApi1.getPlaylist(playlist)
+            .then(
+                async function (data) {
+                    await (async function() {
+                        console.log(data)
+                        for (var song in data.tracks.items) {
+                            leftSongs.push(data.tracks.items[song].track.id)
+                        }
+                        let next = data.tracks.next
+                        if (next != null) {
+                            await getNextPlaylist(next, leftSongs)
+                        } else {
+                            // console.log(leftSongs.length)
+                        }
+                        return new Promise((resolve, reject) => {
+                            resolve()
+                        })
+                    })()
+                },
+                function (err) {
+                    console.error(err);
+                }
+            )
+        }));
+        // for (const playlist of selectedPlaylists1) {}
+        let rightPromises = Promise.all(selectedPlaylists1.map(async (playlist) => {
+            await spotifyApi2.getPlaylist(playlist)
+            .then(
+                async function (data) {
+                    await (async function() {
+                        console.log(data)
+                        for (var song in data.tracks.items) {
+                            rightSongs.push(data.tracks.items[song].track.id)
+                        }
+                        let next = data.tracks.next
+                        if (next != null) {
+                            await getNextPlaylist(next, rightSongs)
+                        }
+                        return new Promise((resolve, reject) => {
+                            resolve()
+                        })
+                    })()
+                },
+                function (err) {
+                    console.error(err);
+                }
+            )
+        }));
+        await leftPromises;
+        await rightPromises;
+        console.log("All done")
+    }
+
+    return [requestAuthorization, generateIntersection];
 
 }
     
