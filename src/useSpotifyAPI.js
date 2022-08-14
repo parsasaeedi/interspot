@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover) {
 
     let redirect_uri = "http://10.0.0.17:3000/";
     let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
@@ -59,7 +59,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
         url += "&response_type=code";
         url += "&redirect_uri=" + encodeURI(redirect_uri);
         url += "&show_dialog=true";
-        url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private";
+        url += "&scope=user-read-private user-library-read playlist-read-private playlist-modify-public";
         window.location.href = url; // Show Spotify's authorization screen
     }
     
@@ -92,35 +92,44 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
     }
 
     function setAccountInfo(side) {
-        spotifyApi1.getMe()
+        if (side === "left") {
+            spotifyApi1.getMe()
             .then(
                 function(data) {
                     if (data != null) {
-                        // console.log(JSON.stringify(data))
-                        // console.log(data.images[0].url)
-                        if (side === "left") {
-                            if (name1 != null) {
-                                setName1(data.display_name)
-                            }
-                            if (data.images[0] != null) {
-                                setProfilePicture1(data.images[0].url)
-                            } else {
-                                setProfilePicture1("/img/DefaultProfilePicture.jpg")
-                            }
-                        } else if (side === "right") {
-                            if (name2 != null) {
-                                setName2(data.display_name)
-                            }
-                            if (data.images[0] != null) {
-                                setProfilePicture2(data.images[0].url)
-                            } else {
-                                setProfilePicture2("/img/DefaultProfilePicture.jpg")
-                            }
+                        if (data.display_name != null) {
+                            setName1(data.display_name)
                         }
-                          
+                        if (data.images[0] != null) {
+                            setProfilePicture1(data.images[0].url)
+                        } else {
+                            setProfilePicture1("/img/DefaultProfilePicture.jpg")
+                        }
+                        setUserId1(data.id)
+                        console.log("Here")
                     }
                 }
             )
+        } else if (side === "right") {
+            spotifyApi2.getMe()
+            .then(
+                function(data) {
+                    if (data != null) {
+                        if (data.display_name != null) {
+                            setName2(data.display_name)
+                        }
+                        if (data.images[0] != null) {
+                            setProfilePicture2(data.images[0].url)
+                        } else {
+                            setProfilePicture2("/img/DefaultProfilePicture.jpg")
+                        }
+                        setUserId2(data.id)
+                            
+                    }
+                }
+            )
+        }
+
     }
 
     function getPlaylists1() {
@@ -268,13 +277,13 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
             )
         }));
         // for (const playlist of selectedPlaylists1) {}
-        let rightPromises = Promise.all(selectedPlaylists1.map(async (playlist) => {
+        let rightPromises = Promise.all(selectedPlaylists2.map(async (playlist) => {
             await spotifyApi2.getPlaylist(playlist)
             .then(
                 async function (data) {
                     await (async function() {
                         console.log(data)
-                        for (var song in data.tracks.items) {
+                        for (let song in data.tracks.items) {
                             rightSongs.push(data.tracks.items[song].track.id)
                         }
                         let next = data.tracks.next
@@ -294,6 +303,31 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
         await leftPromises;
         await rightPromises;
         console.log("All done")
+        console.log(leftSongs.length)
+        console.log(rightSongs.length)
+        let intersection = leftSongs.filter(song => rightSongs.includes(song));
+        console.log(intersection)
+        console.log(userId1)
+        console.log(userId2)
+        await spotifyApi1.createPlaylist(userId1, {name: (name1 + " and " + name2)})
+        .then(
+            async function(data) {
+                setIntersectionId(data.id)
+                await spotifyApi1.addTracksToPlaylist(data.id, intersection.map(songId => {return "spotify:track:" + songId}))
+                await spotifyApi1.getPlaylist(data.id)
+                .then(
+                    function(data2) {
+                        setIntersectionCover(data2.images[0].url)
+                    },
+                    function(err) {
+                        console.error(err);
+                    }
+                )
+            },
+            function(err) {
+                console.error(err);
+            }
+        )
     }
 
     return [requestAuthorization, generateIntersection];
