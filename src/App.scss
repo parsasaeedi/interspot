@@ -205,6 +205,11 @@
                 padding-right: 3%;
                 font-size: 1.1vw;
                 cursor: pointer;
+                &:disabled {
+                    background-color: #606060;
+                    color: #202020;
+                    cursor: not-allowed;
+                }
             }
         }
 

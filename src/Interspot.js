@@ -31,6 +31,8 @@ export default function Interspot() {
     const [whoAsked, setWhoAsked] = useState(sessionStorage.getItem('whoAsked') ?? "")
     const [intersectionId, setIntersectionId] = useState("")
     const [intersectionCover, setIntersectionCover] = useState("")
+    const [playlistsStatus1, setPlaylistsStatus1] = useState("notRequested")
+    const [playlistsStatus2, setPlaylistsStatus2] = useState("notRequested")
 
     useEffect(() => {
         storeStates()
@@ -69,7 +71,7 @@ export default function Interspot() {
         setSelectedPlaylists2([])
     }
 
-    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover);
+    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2);
 
     // event handlers
     const handleChangeName1 = ({target}) => setName1(target.value)
@@ -100,9 +102,9 @@ export default function Interspot() {
     if (page === "signIn" || page === "playlistSelection") {
         containerContent = 
         <div className="container containerHorizontal">
-            <Content page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1}/>
+            <Content side="left" page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
             <div className="verticalLine"></div>
-            <Content page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2}/>
+            <Content side="right" page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
         </div>
     } else if (page === "waiting") {
         containerContent = 

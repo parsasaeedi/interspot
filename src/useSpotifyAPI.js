@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2) {
 
     let redirect_uri = "http://10.0.0.17:3000/";
     let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
@@ -134,6 +134,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
 
     function getPlaylists1() {
         // spotifyApi1.setAccessToken(access_token1);
+        setPlaylistsStatus1("requested")
         let total;
         let tempPlaylists1 = [];
         spotifyApi1.getUserPlaylists({ limit: 50 })
@@ -141,8 +142,13 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             function (data) {
                 if (data != null) {
                     for (var key in data.items) {
-                        // console.log(data.items[key].name);
-                        tempPlaylists1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
+                        let albumCover;
+                        if (data.items[key].images.length != 0) {
+                            albumCover = data.items[key].images[0].url
+                        } else {
+                            albumCover = "/img/DefaultCover.jpg"
+                        }
+                        tempPlaylists1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": albumCover})
                     }
                     total = data.total
                 }
@@ -151,33 +157,40 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 console.error(err);
             }
         ).then(
-            function() {
-                for (let i=0; i<Math.ceil((total-50)/50); i++) {
-                    spotifyApi1.getUserPlaylists({ limit: 50, offset: (i+1)*50})
+            async function() {
+                let offsets = [...Array(Math.ceil((total-50)/50)).keys()]
+                let playlistPromises = Promise.all(offsets.map(async (offset) => {
+                    await spotifyApi1.getUserPlaylists({ limit: 50, offset: (offset+1)*50})
                     .then(
                         function (data) {
-                            if (data != null) {
-                                for (var key in data.items) {
-                                    // console.log(data.items[key].name);
-                                    tempPlaylists1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
+                            for (var key in data.items) {
+                                let albumCover;
+                                if (data.items[key].images.length != 0) {
+                                    albumCover = data.items[key].images[0].url
+                                } else {
+                                    albumCover = "/img/DefaultCover.jpg"
                                 }
+                                tempPlaylists1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": albumCover})
                             }
+                            return new Promise((resolve, reject) => {
+                                resolve()
+                            })
                         },
                         function (err) {
                             console.error(err);
                         }
                     )
-                }
-            }
-        ).then(
-            function() {
-                setPlaylists1(tempPlaylists1)
+                }))
+                await playlistPromises;
+                setPlaylists1(tempPlaylists1);
+                setPlaylistsStatus1("received")
             }
         )
     }
 
     function getPlaylists2() {
         // spotifyApi2.setAccessToken(access_token2);
+        setPlaylistsStatus2("requested")
         let total;
         let tempPlaylists2 = [];
         spotifyApi2.getUserPlaylists({ limit: 50 })
@@ -186,7 +199,13 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 if (data != null) {
                     for (var key in data.items) {
                         // console.log(data.items[key].name);
-                        tempPlaylists2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
+                        let albumCover;
+                        if (data.items[key].images.length != 0) {
+                            albumCover = data.items[key].images[0].url
+                        } else {
+                            albumCover = "/img/DefaultCover.jpg"
+                        }
+                        tempPlaylists2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": albumCover})
                     }
                     total = data.total
                 }
@@ -195,43 +214,52 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 console.error(err);
             }
         ).then(
-            function() {
-                for (let i=0; i<Math.ceil((total-50)/50); i++) {
-                    spotifyApi2.getUserPlaylists({ limit: 50, offset: (i+1)*50})
+            async function() {
+                let offsets = [...Array(Math.ceil((total-50)/50)).keys()]
+                let playlistPromises = Promise.all(offsets.map(async (offset) => {
+                    await spotifyApi2.getUserPlaylists({ limit: 50, offset: (offset+1)*50})
                     .then(
                         function (data) {
-                            if (data != null) {
-                                for (var key in data.items) {
-                                    // console.log(data.items[key].name);
-                                    tempPlaylists2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": data.items[key].images[0].url})
+                            for (var key in data.items) {
+                                let albumCover;
+                                if (data.items[key].images.length != 0) {
+                                    albumCover = data.items[key].images[0].url
+                                } else {
+                                    albumCover = "/img/DefaultCover.jpg"
                                 }
+                                tempPlaylists2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": albumCover})
                             }
+                            return new Promise((resolve, reject) => {
+                                resolve()
+                            })
                         },
                         function (err) {
                             console.error(err);
                         }
                     )
-                }
-            }
-        ).then(
-            function() {
-                setPlaylists2(tempPlaylists2)
+                }))
+                await playlistPromises;
+                setPlaylists2(tempPlaylists2);
+                setPlaylistsStatus2("received")
             }
         )
     }
 
-    const getNextPlaylist = async (next, songs) => {
+    const getNextSongs = async (next, songs) => {
         await spotifyApi1.getGeneric(next)
         .then(
             async function (data) {
                 if (data != null) {
                     console.log(data)
                     for (var song in data.items) {
+                        if (data.next == null) {
+                            console.log(song)
+                        }
                         songs.push(data.items[song].track.id)
                     }
                     next = data.next
                     if (next != null) {
-                        await getNextPlaylist(next, songs)
+                        await getNextSongs(next, songs)
                     } else {
                         // console.log(songs.length)
                     }
@@ -261,7 +289,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         }
                         let next = data.tracks.next
                         if (next != null) {
-                            await getNextPlaylist(next, leftSongs)
+                            await getNextSongs(next, leftSongs)
                         } else {
                             // console.log(leftSongs.length)
                         }
@@ -285,7 +313,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         }
                         let next = data.tracks.next
                         if (next != null) {
-                            await getNextPlaylist(next, rightSongs)
+                            await getNextSongs(next, rightSongs)
                         }
                         return new Promise((resolve, reject) => {
                             resolve()

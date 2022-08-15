@@ -298,6 +298,12 @@
   cursor: pointer;
 }
 
+.header .container .playlistSelection button:disabled, .header .container .signIn button:disabled {
+  background-color: #606060;
+  color: #202020;
+  cursor: not-allowed;
+}
+
 .header .container .loading {
   color: white;
   text-align: center;
