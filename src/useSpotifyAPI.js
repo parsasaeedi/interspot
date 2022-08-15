@@ -300,7 +300,6 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         await leftPromises;
         await rightPromises;
         let intersection = leftSongs.filter(song => rightSongs.includes(song));
-        setPage("success")
         await spotifyApi1.createPlaylist(userId1, {name: (name1 + " and " + name2)})
         .then(
             async function(data) {
@@ -313,9 +312,11 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 await spotifyApi1.getPlaylistCoverImage(playlistId)
                 .then(
                     async function(data2) {
-                        console.log(data2[0].url)
+                        setPage("success")
                         await setIntersectionCover(data2[0].url)
-                        setPage("result")
+                        setTimeout(function(){
+                            setPage("result")
+                        }, 2000);
                     },
                     function(err) {
                         console.error(err);
