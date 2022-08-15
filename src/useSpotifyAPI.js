@@ -300,33 +300,37 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         await leftPromises;
         await rightPromises;
         let intersection = leftSongs.filter(song => rightSongs.includes(song));
-        await spotifyApi1.createPlaylist(userId1, {name: (name1 + " and " + name2)})
-        .then(
-            async function(data) {
-                let playlistId = data.id
-                setIntersectionId(playlistId)
-                await spotifyApi1.addTracksToPlaylist(playlistId, intersection.map(songId => {return "spotify:track:" + songId}))
-                if (userId1 != userId2) {
-                    spotifyApi2.followPlaylist(playlistId)
-                }
-                await spotifyApi1.getPlaylistCoverImage(playlistId)
-                .then(
-                    async function(data2) {
-                        setPage("success")
-                        await setIntersectionCover(data2[0].url)
-                        setTimeout(function(){
-                            setPage("result")
-                        }, 2000);
-                    },
-                    function(err) {
-                        console.error(err);
+        if (intersection.length === 0) {
+            setPage("noIntersection")
+        } else {
+            await spotifyApi1.createPlaylist(userId1, {name: (name1 + " and " + name2)})
+            .then(
+                async function(data) {
+                    let playlistId = data.id
+                    setIntersectionId(playlistId)
+                    await spotifyApi1.addTracksToPlaylist(playlistId, intersection.map(songId => {return "spotify:track:" + songId}))
+                    if (userId1 != userId2) {
+                        spotifyApi2.followPlaylist(playlistId)
                     }
-                )
-            },
-            function(err) {
-                console.error(err);
-            }
-        )
+                    await spotifyApi1.getPlaylistCoverImage(playlistId)
+                    .then(
+                        async function(data2) {
+                            setPage("success")
+                            await setIntersectionCover(data2[0].url)
+                            setTimeout(function(){
+                                setPage("result")
+                            }, 2000);
+                        },
+                        function(err) {
+                            console.error(err);
+                        }
+                    )
+                },
+                function(err) {
+                    console.error(err);
+                }
+            )
+        }
     }
 
     return [requestAuthorization, generateIntersection];

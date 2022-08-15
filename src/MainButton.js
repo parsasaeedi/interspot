@@ -9,7 +9,9 @@ export default function MainButton(props) {
             props.generateIntersection();
             props.setPage("waiting")
         } else if (props.page === "result") {
-            // Reset
+            props.restart()
+        } else if (props.page === "noIntersection") {
+            props.goToPlaylistSelection()
         }
     }
 
@@ -30,6 +32,8 @@ export default function MainButton(props) {
         button = <button className='mainButton' onClick={handleClick} disabled>WAITING...</button>
     } else if (props.page === "result") {
         button = <button className='mainButton' onClick={handleClick}>Restart</button>
+    } else if (props.page === "noIntersection") {
+        button = <button className='mainButton' onClick={handleClick}>Go back</button>
     }
 
     return button

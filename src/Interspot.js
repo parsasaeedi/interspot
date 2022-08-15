@@ -16,8 +16,6 @@ export default function Interspot() {
     const [page, setPage] = useState("signIn")
     const [name1, setName1] = useState(sessionStorage.getItem('name1') ?? "")
     const [name2, setName2] = useState(sessionStorage.getItem('name2') ?? "")
-    const [selectedPlaylists1, setSelectedPlaylists1] = useState([])
-    const [selectedPlaylists2, setSelectedPlaylists2] = useState([])
     const [signedIn1, setSignedIn1] = useState(sessionStorage.getItem('signedIn1') ?? "")
     const [signedIn2, setSignedIn2] = useState(sessionStorage.getItem('signedIn2') ?? "")
     const [profilePicture1, setProfilePicture1] = useState(sessionStorage.getItem('profilePicture1') ?? "")
@@ -26,6 +24,8 @@ export default function Interspot() {
     const [userId2, setUserId2] = useState(sessionStorage.getItem('userId2') ?? "")
     const [playlists1, setPlaylists1] = useState(JSON.parse(sessionStorage.getItem('playlists1')) ?? [])
     const [playlists2, setPlaylists2] = useState(JSON.parse(sessionStorage.getItem('playlists2')) ?? [])
+    const [selectedPlaylists1, setSelectedPlaylists1] = useState([])
+    const [selectedPlaylists2, setSelectedPlaylists2] = useState([])
     const [access_token1, setAccess_token1] = useState(sessionStorage.getItem('access_token1') ?? "")
     const [access_token2, setAccess_token2] = useState(sessionStorage.getItem('access_token2') ?? "")
     const [whoAsked, setWhoAsked] = useState(sessionStorage.getItem('whoAsked') ?? "")
@@ -58,7 +58,15 @@ export default function Interspot() {
     }
 
     function restart() {
+        setPage("signIn")
+        setSelectedPlaylists1([])
+        setSelectedPlaylists2([])
+    }
 
+    function goToPlaylistSelection() {
+        setPage("playlistSelection")
+        setSelectedPlaylists1([])
+        setSelectedPlaylists2([])
     }
 
     const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover);
@@ -129,13 +137,18 @@ export default function Interspot() {
                 <span className="playListIsInYourLibrary">You can find this playlist in both of your libraries!</span>
             </div>
         </div>
+    } else if (page === "noIntersection") {
+        containerContent = 
+        <div className="container containerVertical">
+            <span className="noIntersection">You have no songs in common :(</span>
+        </div>
     }
 
     return(
         <div className="header">
             <a href="./"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></a>
             {containerContent}
-            <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2} selectedPlaylists1={selectedPlaylists1} selectedPlaylists2={selectedPlaylists2} generateIntersection={generateIntersection}/>
+            <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2} selectedPlaylists1={selectedPlaylists1} selectedPlaylists2={selectedPlaylists2} generateIntersection={generateIntersection} restart={restart} goToPlaylistSelection={goToPlaylistSelection}/>
         </div>
     )
 }

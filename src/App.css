@@ -431,6 +431,11 @@
   font-size: 0.8vw;
 }
 
+.header .container .noIntersection {
+  color: white;
+  font-size: 1vw;
+}
+
 .header .mainButton {
   background-color: #1ED760;
   color: white;
