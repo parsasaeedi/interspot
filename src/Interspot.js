@@ -4,6 +4,7 @@ import SignIn from './SignIn'
 import useSpotifyAPI from './useSpotifyAPI';
 import MainButton from './MainButton';
 import Content from './Content';
+import {CopyToClipboard} from 'react-copy-to-clipboard'
 
 export default function Interspot() {
     let redirect_uri = "http://10.0.0.17:3000/";
@@ -22,14 +23,14 @@ export default function Interspot() {
     const [profilePicture1, setProfilePicture1] = useState(sessionStorage.getItem('profilePicture1') ?? "")
     const [profilePicture2, setProfilePicture2] = useState(sessionStorage.getItem('profilePicture2') ?? "")
     const [userId1, setUserId1] = useState(sessionStorage.getItem('userId1') ?? "")
-    const [userId2, setUserId2] = useState(sessionStorage.getItem('userId1') ?? "")
+    const [userId2, setUserId2] = useState(sessionStorage.getItem('userId2') ?? "")
     const [playlists1, setPlaylists1] = useState(JSON.parse(sessionStorage.getItem('playlists1')) ?? [])
     const [playlists2, setPlaylists2] = useState(JSON.parse(sessionStorage.getItem('playlists2')) ?? [])
     const [access_token1, setAccess_token1] = useState(sessionStorage.getItem('access_token1') ?? "")
     const [access_token2, setAccess_token2] = useState(sessionStorage.getItem('access_token2') ?? "")
     const [whoAsked, setWhoAsked] = useState(sessionStorage.getItem('whoAsked') ?? "")
-    const [intersectionId, setIntersectionId] = useState(sessionStorage.getItem('intersectionId') ?? "")
-    const [intersectionCover, setIntersectionCover] = useState(sessionStorage.getItem('intersectionCover') ?? "")
+    const [intersectionId, setIntersectionId] = useState("")
+    const [intersectionCover, setIntersectionCover] = useState("")
 
     useEffect(() => {
         storeStates()
@@ -56,7 +57,11 @@ export default function Interspot() {
         sessionStorage.setItem('playlists2', JSON.stringify(playlists2));
     }
 
-    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover);
+    function restart() {
+
+    }
+
+    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover);
 
     // event handlers
     const handleChangeName1 = ({target}) => setName1(target.value)
@@ -73,6 +78,14 @@ export default function Interspot() {
         requestAuthorization();
         // Do stuff
     }
+
+    function copyTextToClipboard(text) {
+        if ('clipboard' in navigator) {
+          navigator.clipboard.writeText(text);
+        } else {
+          document.execCommand('copy', true, text);
+        }
+      }
 
     let containerContent;
 
@@ -103,15 +116,17 @@ export default function Interspot() {
             </div>
         </div>
     } else if (page === "result") {
+        let intersectionLink = "https://open.spotify.com/playlist/" + intersectionId
         containerContent = 
         <div className="container containerVertical">
             <div className="intersectionCard">
                 <span className="intersectionName">{name1 + " and " + name2}</span>
                 <img src={intersectionCover} className="intersectionCover" alt="Intersection Cover" />
                 <div className="intersectionLink">
-                    <a href={"https://open.spotify.com/playlist/" + intersectionId}>{"https://open.spotify.com/playlist/" + intersectionId}</a>
-                    <button>COPY</button>
+                    <a href={intersectionLink}>{intersectionLink}</a>
+                    <button onClick={copyTextToClipboard(intersectionLink)}>COPY</button>
                 </div>
+                <span className="playListIsInYourLibrary">You can find this playlist in both of your libraries!</span>
             </div>
         </div>
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover) {
 
     let redirect_uri = "http://10.0.0.17:3000/";
     let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
@@ -256,7 +256,6 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
             .then(
                 async function (data) {
                     await (async function() {
-                        console.log(data)
                         for (var song in data.tracks.items) {
                             leftSongs.push(data.tracks.items[song].track.id)
                         }
@@ -276,13 +275,11 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
                 }
             )
         }));
-        // for (const playlist of selectedPlaylists1) {}
         let rightPromises = Promise.all(selectedPlaylists2.map(async (playlist) => {
             await spotifyApi2.getPlaylist(playlist)
             .then(
                 async function (data) {
                     await (async function() {
-                        console.log(data)
                         for (let song in data.tracks.items) {
                             rightSongs.push(data.tracks.items[song].track.id)
                         }
@@ -303,15 +300,22 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
         await leftPromises;
         await rightPromises;
         let intersection = leftSongs.filter(song => rightSongs.includes(song));
+        setPage("success")
         await spotifyApi1.createPlaylist(userId1, {name: (name1 + " and " + name2)})
         .then(
             async function(data) {
-                setIntersectionId(data.id)
-                await spotifyApi1.addTracksToPlaylist(data.id, intersection.map(songId => {return "spotify:track:" + songId}))
-                await spotifyApi1.getPlaylist(data.id)
+                let playlistId = data.id
+                setIntersectionId(playlistId)
+                await spotifyApi1.addTracksToPlaylist(playlistId, intersection.map(songId => {return "spotify:track:" + songId}))
+                if (userId1 != userId2) {
+                    spotifyApi2.followPlaylist(playlistId)
+                }
+                await spotifyApi1.getPlaylistCoverImage(playlistId)
                 .then(
-                    function(data2) {
-                        setIntersectionCover(data2.images[0].url)
+                    async function(data2) {
+                        console.log(data2[0].url)
+                        await setIntersectionCover(data2[0].url)
+                        setPage("result")
                     },
                     function(err) {
                         console.error(err);

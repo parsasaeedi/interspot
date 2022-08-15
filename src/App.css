@@ -427,6 +427,10 @@
   cursor: pointer;
 }
 
+.header .container .intersectionCard .playListIsInYourLibrary {
+  font-size: 0.8vw;
+}
+
 .header .mainButton {
   background-color: #1ED760;
   color: white;

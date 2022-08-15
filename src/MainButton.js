@@ -7,10 +7,7 @@ export default function MainButton(props) {
             props.setPage("playlistSelection")
         } else if (props.page === "playlistSelection") {
             props.generateIntersection();
-            props.setPage("result")
-            // setTimeout(function (){
-            //     props.setPage("success")  
-            // }, 2000);
+            props.setPage("waiting")
         } else if (props.page === "result") {
             // Reset
         }
