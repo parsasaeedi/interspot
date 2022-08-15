@@ -74,14 +74,52 @@ export default function Interspot() {
         // Do stuff
     }
 
+    let containerContent;
+
+    if (page === "signIn" || page === "playlistSelection") {
+        containerContent = 
+        <div className="container containerHorizontal">
+            <Content page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1}/>
+            <div className="verticalLine"></div>
+            <Content page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2}/>
+        </div>
+    } else if (page === "waiting") {
+        containerContent = 
+        <div className="container containerVertical">
+            <div className="loading">
+                <span>Generating Playlist...</span>
+                <div class="loadingAnimation">
+                    <div class="double-bounce1"></div>
+                    <div class="double-bounce2"></div>
+                </div>
+            </div>
+        </div>
+    } else if (page === "success") {
+        containerContent = 
+        <div className="container containerVertical">
+            <div className="loading">
+                <span>Playlist Generated!</span>
+                <img className="loadingAnimation" src="/img/success.gif" alt="success"/>
+            </div>
+        </div>
+    } else if (page === "result") {
+        containerContent = 
+        <div className="container containerVertical">
+            <div className="intersectionCard">
+                <span className="intersectionName">{name1 + " and " + name2}</span>
+                <img src={intersectionCover} className="intersectionCover" alt="Intersection Cover" />
+                <div className="intersectionLink">
+                    <a href={"https://open.spotify.com/playlist/" + intersectionId}>{"https://open.spotify.com/playlist/" + intersectionId}</a>
+                    <button>COPY</button>
+                </div>
+            </div>
+        </div>
+    }
+
     return(
         <div className="header">
             <a href="./"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></a>
-            <div className="container">
-                <Content page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1}/>
-                <div className="verticalLine"></div>
-                <Content page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2}/>
-            </div>
+            {containerContent}
             <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2} selectedPlaylists1={selectedPlaylists1} selectedPlaylists2={selectedPlaylists2} generateIntersection={generateIntersection}/>
         </div>
     )

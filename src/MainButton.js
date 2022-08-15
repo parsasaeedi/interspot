@@ -1,29 +1,38 @@
 import React from "react";
 
 export default function MainButton(props) {
-    let buttonText = props.page==="signIn" ? "CONTINUE" : "GENERATE";
 
     const handleClick = () => {
         if (props.page === "signIn") {
             props.setPage("playlistSelection")
         } else if (props.page === "playlistSelection") {
             props.generateIntersection();
+            props.setPage("result")
+            // setTimeout(function (){
+            //     props.setPage("success")  
+            // }, 2000);
+        } else if (props.page === "result") {
+            // Reset
         }
     }
 
     let button
     if (props.page === "signIn") {
         if (!(props.signedIn1 && props.signedIn2)) {
-            button = <button className='mainButton' onClick={handleClick} disabled>{buttonText}</button>
+            button = <button className='mainButton' onClick={handleClick} disabled>CONTINUE</button>
         } else {
-            button = <button className='mainButton' onClick={handleClick}>{buttonText}</button>
+            button = <button className='mainButton' onClick={handleClick}>CONTINUE</button>
         }
     } else if (props.page === "playlistSelection") {
         if (!(props.selectedPlaylists1.length > 0 && props.selectedPlaylists2.length > 0)) {
-            button = <button className='mainButton' onClick={handleClick} disabled>{buttonText}</button>
+            button = <button className='mainButton' onClick={handleClick} disabled>GENERATE</button>
         } else {
-            button = <button className='mainButton' onClick={handleClick}>{buttonText}</button>
+            button = <button className='mainButton' onClick={handleClick}>GENERATE</button>
         }
+    } else if (props.page === "waiting" ||props.page === "success" ) {
+        button = <button className='mainButton' onClick={handleClick} disabled>WAITING...</button>
+    } else if (props.page === "result") {
+        button = <button className='mainButton' onClick={handleClick}>Restart</button>
     }
 
     return button

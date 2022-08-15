@@ -302,13 +302,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, playlist
         }));
         await leftPromises;
         await rightPromises;
-        console.log("All done")
-        console.log(leftSongs.length)
-        console.log(rightSongs.length)
         let intersection = leftSongs.filter(song => rightSongs.includes(song));
-        console.log(intersection)
-        console.log(userId1)
-        console.log(userId2)
         await spotifyApi1.createPlaylist(userId1, {name: (name1 + " and " + name2)})
         .then(
             async function(data) {

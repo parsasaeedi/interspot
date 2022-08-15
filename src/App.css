@@ -34,6 +34,28 @@
   width: 10vw;
 }
 
+.header .containerHorizontal {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.header .containerVertical {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .header .container {
   background-color: #121212;
   width: 85vw;
@@ -42,12 +64,6 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
 }
 
 .header .container .verticalLine {
@@ -277,6 +293,137 @@
   border-radius: 2vw;
   width: 20%;
   font-size: 1.1vw;
+  cursor: pointer;
+}
+
+.header .container .loading {
+  color: white;
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  font-size: 1.1vw;
+  height: 25%;
+}
+
+.header .container .loading .loadingAnimation {
+  width: 7vw;
+  height: 7vw;
+  position: relative;
+}
+
+.header .container .loading .double-bounce1, .header .container .loading .double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #606060;
+  opacity: 0.6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+  animation: sk-bounce 2.0s infinite ease-in-out;
+}
+
+.header .container .loading .double-bounce2 {
+  -webkit-animation-delay: -1.0s;
+  animation-delay: -1.0s;
+}
+
+@-webkit-keyframes sk-bounce {
+  0%, 100% {
+    -webkit-transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes sk-bounce {
+  0%, 100% {
+    transform: scale(0);
+    -webkit-transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+  }
+}
+
+.header .container .intersectionCard {
+  background-color: #202020;
+  border-radius: 2vw;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 30%;
+  height: 80%;
+}
+
+.header .container .intersectionCard .intersectionName {
+  font-size: 1.5vw;
+}
+
+.header .container .intersectionCard .intersectionCover {
+  width: 80%;
+  border-radius: 1vw;
+}
+
+.header .container .intersectionCard .intersectionLink {
+  width: 80%;
+  background-color: #606060;
+  height: 6%;
+  border-radius: 2vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 3%;
+}
+
+.header .container .intersectionCard .intersectionLink a {
+  text-decoration: none;
+  font-size: 0.49vw;
+  color: white;
+}
+
+.header .container .intersectionCard .intersectionLink button {
+  background-color: #1ED760;
+  color: white;
+  height: 100%;
+  border: none;
+  border-radius: 2vw;
+  width: 20%;
+  font-size: 0.7vw;
   cursor: pointer;
 }
 

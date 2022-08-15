@@ -23,6 +23,17 @@
     .interspotLogo {
         width: 10vw;
     }
+
+    .containerHorizontal {
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .containerVertical {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
   
     .container {
         background-color: #121212;
@@ -30,8 +41,6 @@
         height: 75vh;
         border-radius: 2vw;
         display: flex;
-        align-items: center;
-        justify-content: space-evenly;
 
         .verticalLine {
             border-left: 1px solid #202020;
@@ -195,6 +204,107 @@
                 cursor: pointer;
             }
         }
+
+        .loading {
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            justify-content: space-between;
+            font-size: 1.1vw;
+            height: 25%;
+
+
+            .loadingAnimation {
+                width: 7vw;
+                height: 7vw;
+                position: relative;
+            }
+            
+            .double-bounce1, .double-bounce2 {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                background-color: #606060;
+                opacity: 0.6;
+                position: absolute;
+                top: 0;
+                left: 0;
+                
+                -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+                animation: sk-bounce 2.0s infinite ease-in-out;
+            }
+            
+            .double-bounce2 {
+                -webkit-animation-delay: -1.0s;
+                animation-delay: -1.0s;
+            }
+            
+            @-webkit-keyframes sk-bounce {
+                0%, 100% { -webkit-transform: scale(0.0) }
+                50% { -webkit-transform: scale(1.0) }
+            }
+            
+            @keyframes sk-bounce {
+                0%, 100% { 
+                    transform: scale(0.0);
+                    -webkit-transform: scale(0.0);
+                } 50% { 
+                    transform: scale(1.0);
+                    -webkit-transform: scale(1.0);
+                }
+            }
+        }
+
+        .intersectionCard {
+            background-color: #202020;
+            border-radius: 2vw;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 30%;
+            height: 80%;
+
+            .intersectionName {
+                font-size: 1.5vw;
+            }
+            .intersectionCover{
+                width: 80%;
+                border-radius: 1vw;
+            }
+            .intersectionLink {
+                width: 80%;
+                background-color: #606060;
+                height: 6%;
+                border-radius: 2vw;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-left: 3%;
+
+                & a {
+                    text-decoration: none;
+                    font-size: 0.49vw;
+                    color: white;
+                }
+
+                button {
+                    background-color: #1ED760;
+                    color: white;
+                    height: 100%;
+                    border: none;
+                    border-radius: 2vw;
+                    width: 20%;
+                    font-size: 0.7vw;
+                    cursor: pointer;
+                }
+            }
+        }
+
     }
 
     .mainButton {
