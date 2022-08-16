@@ -277,7 +277,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             .then(
                 async function (data) {
                     await (async function() {
-                        console.log(data);
+                        // console.log(data);
                         for (let song in data.items) {
                             leftSongs.push(data.items[song].track.id)
                         }
@@ -287,7 +287,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                             await spotifyApi1.getPlaylistTracks(playlist, {offset: (offset+1)*100})
                             .then(
                                 function (data2) {
-                                    console.log(data2);
+                                    // console.log(data2);
                                     for (let song in data2.items) {
                                         if (data2.items[song].track != null) {
                                             leftSongs.push(data2.items[song].track.id)
@@ -316,7 +316,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             .then(
                 async function (data) {
                     await (async function() {
-                        console.log(data);
+                        // console.log(data);
                         for (let song in data.items) {
                             rightSongs.push(data.items[song].track.id)
                         }
@@ -326,7 +326,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                             await spotifyApi2.getPlaylistTracks(playlist, {offset: (offset+1)*100})
                             .then(
                                 function (data2) {
-                                    console.log(data2);
+                                    // console.log(data2);
                                     for (let song in data2.items) {
                                         if (data2.items[song].track != null) {
                                             rightSongs.push(data2.items[song].track.id)
@@ -352,14 +352,17 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         }));
         await leftPromises;
         await rightPromises;
-        // console.log(leftSongs.length);
-        // console.log(rightSongs.length);
         let intersection = leftSongs.filter(song => rightSongs.includes(song));
         let intersectionURI = intersection.map(songId => {return "spotify:track:" + songId})
-        console.log(intersection.length);
         if (intersection.length === 0) {
             setPage("noIntersection")
         } else {
+            setPage("success")
+            let successPromise = new Promise((resolve, reject) => {
+                setTimeout(function(){
+                    resolve()
+                }, 2000);
+            })
             await spotifyApi1.createPlaylist(userId1, {name: (name1 + " and " + name2)})
             .then(
                 async function(data) {
@@ -379,11 +382,9 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                     await spotifyApi1.getPlaylistCoverImage(playlistId)
                     .then(
                         async function(data2) {
-                            setPage("success")
                             await setIntersectionCover(data2[0].url)
-                            setTimeout(function(){
-                                setPage("result")
-                            }, 2000);
+                            await successPromise
+                            setPage("result")
                         },
                         function(err) {
                             console.error(err);
