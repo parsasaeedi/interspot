@@ -190,15 +190,15 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   text-align: center;
 }
 
 .header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlist .playlistCover, .header .container .signIn .playlistsContainer .playlistsWrapper .playlist .playlistCover {
   width: 100%;
-  margin-bottom: 5%;
+  margin-bottom: 10%;
   border-radius: 10%;
 }
 
