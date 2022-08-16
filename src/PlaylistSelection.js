@@ -18,8 +18,8 @@ export default function PlaylistSelection(props) {
                     <div className="playlist"><img src="/img/playlist2.png" alt="playlist2" className="playlistCover" /><span className="playlistName">playlist2</span></div>
                     <div className="playlist"><img src="/img/playlist3.png" alt="playlist3" className="playlistCover" /><span className="playlistName">playlist3</span></div>
                     <div className="playlist"><img src="/img/playlist4.png" alt="playlist4" className="playlistCover" /><span className="playlistName">playlist4</span></div> */}
-                    {props.playlists.length > 0 && props.playlists.map(({name, id, cover}) => (
-                        <Playlist name={name} id={id} cover={cover} selectedPlaylists={props.selectedPlaylists} setSelectedPlaylists={props.setSelectedPlaylists}/>
+                    {props.playlists.length > 0 && props.playlists.map(({name, id, cover}, index) => (
+                        <Playlist key={index} name={name} id={id} cover={cover} selectedPlaylists={props.selectedPlaylists} setSelectedPlaylists={props.setSelectedPlaylists}/>
                     ))}
                 </div>
             </div>

@@ -247,7 +247,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         .then(
             async function (data) {
                 if (data != null) {
-                    for (var song in data.items) {
+                    for (let song in data.items) {
                         songs.push(data.items[song].track.id)
                     }
                     next = data.next
@@ -273,19 +273,34 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         let leftSongs = [];
         let rightSongs = [];
         let leftPromises =  Promise.all(selectedPlaylists1.map(async (playlist) => {
-            await spotifyApi1.getPlaylist(playlist)
+            await spotifyApi1.getPlaylistTracks(playlist)
             .then(
                 async function (data) {
                     await (async function() {
-                        for (var song in data.tracks.items) {
-                            leftSongs.push(data.tracks.items[song].track.id)
+                        console.log(data);
+                        for (let song in data.items) {
+                            leftSongs.push(data.items[song].track.id)
                         }
-                        let next = data.tracks.next
-                        if (next != null) {
-                            await getNextSongs(next, leftSongs)
-                        } else {
-                            // console.log(leftSongs.length)
-                        }
+                        let total = data.total;
+                        let songOffsets = [...Array(Math.ceil(total/100)-1).keys()]
+                        await Promise.all(songOffsets.map(async (offset) => {
+                            await spotifyApi1.getPlaylistTracks(playlist, {offset: (offset+1)*100})
+                            .then(
+                                function (data2) {
+                                    console.log(data2);
+                                    for (let song in data2.items) {
+                                        if (data2.items[song].track != null) {
+                                            leftSongs.push(data2.items[song].track.id)
+                                        }
+                                    }
+                                    return new Promise((resolve, reject) => {
+                                        resolve()
+                                    })
+                                }, function (err) {
+                                    console.error(err);
+                                }
+                            )
+                        }))
                         return new Promise((resolve, reject) => {
                             resolve()
                         })
@@ -297,17 +312,34 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             )
         }));
         let rightPromises = Promise.all(selectedPlaylists2.map(async (playlist) => {
-            await spotifyApi2.getPlaylist(playlist)
+            await spotifyApi1.getPlaylistTracks(playlist)
             .then(
                 async function (data) {
                     await (async function() {
-                        for (let song in data.tracks.items) {
-                            rightSongs.push(data.tracks.items[song].track.id)
+                        console.log(data);
+                        for (let song in data.items) {
+                            rightSongs.push(data.items[song].track.id)
                         }
-                        let next = data.tracks.next
-                        if (next != null) {
-                            await getNextSongs(next, rightSongs)
-                        }
+                        let total = data.total;
+                        let songOffsets = [...Array(Math.ceil(total/100)-1).keys()]
+                        await Promise.all(songOffsets.map(async (offset) => {
+                            await spotifyApi2.getPlaylistTracks(playlist, {offset: (offset+1)*100})
+                            .then(
+                                function (data2) {
+                                    console.log(data2);
+                                    for (let song in data2.items) {
+                                        if (data2.items[song].track != null) {
+                                            rightSongs.push(data2.items[song].track.id)
+                                        }
+                                    }
+                                    return new Promise((resolve, reject) => {
+                                        resolve()
+                                    })
+                                }, function (err) {
+                                    console.error(err);
+                                }
+                            )
+                        }))
                         return new Promise((resolve, reject) => {
                             resolve()
                         })
@@ -320,8 +352,11 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         }));
         await leftPromises;
         await rightPromises;
+        // console.log(leftSongs.length);
+        // console.log(rightSongs.length);
         let intersection = leftSongs.filter(song => rightSongs.includes(song));
         let intersectionURI = intersection.map(songId => {return "spotify:track:" + songId})
+        console.log(intersection.length);
         if (intersection.length === 0) {
             setPage("noIntersection")
         } else {

@@ -111,9 +111,9 @@ export default function Interspot() {
         <div className="container containerVertical">
             <div className="loading">
                 <span>Generating Playlist...</span>
-                <div class="loadingAnimation">
-                    <div class="double-bounce1"></div>
-                    <div class="double-bounce2"></div>
+                <div className="loadingAnimation">
+                    <div className="double-bounce1"></div>
+                    <div className="double-bounce2"></div>
                 </div>
             </div>
         </div>
