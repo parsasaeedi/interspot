@@ -23,11 +23,11 @@ export default function PlaylistSelection(props) {
                     ))}
                 </div>
             </div>
-            <div className="addPlaylist">
+            {/* <div className="addPlaylist">
                 <input type="text" name="playlistId1" id="playlistId1" className="playlistId" spellCheck="false" placeholder="PLAYLIST LINK"/>
                 <img src="/img/circle-question.png" alt="help" />
                 <button>ADD</button>
-            </div>
+            </div> */}
         </div>
     )
 }
