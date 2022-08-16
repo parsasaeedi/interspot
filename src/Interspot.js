@@ -134,7 +134,7 @@ export default function Interspot() {
                 <img src={intersectionCover} className="intersectionCover" alt="Intersection Cover" />
                 <div className="intersectionLink">
                     <a href={intersectionLink}>{intersectionLink}</a>
-                    <button onClick={copyTextToClipboard(intersectionLink)}>COPY</button>
+                    <button onClick={copyTextToClipboard(intersectionLink)}><img className="copyIcon" src="/img/CopyIcon.png" alt="Copy" /></button>
                 </div>
                 <span className="playListIsInYourLibrary">You can find this playlist in both of your libraries!</span>
             </div>

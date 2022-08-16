@@ -296,19 +296,24 @@
 
                 & a {
                     text-decoration: none;
-                    font-size: 0.49vw;
+                    font-size: 0.53vw;
                     color: white;
                 }
 
                 button {
-                    background-color: #1ED760;
+                    background-color: #606060;
                     color: white;
                     height: 100%;
                     border: none;
                     border-radius: 2vw;
-                    width: 20%;
+                    width: 15%;
                     font-size: 0.7vw;
                     cursor: pointer;
+
+                    .copyIcon {
+                        height: 1.5vh;
+                        aspect-ratio: 1;
+                    }
                 }
             }
             .playListIsInYourLibrary {
