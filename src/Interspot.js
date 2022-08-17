@@ -5,6 +5,7 @@ import useSpotifyAPI from './useSpotifyAPI';
 import MainButton from './MainButton';
 import Content from './Content';
 import {CopyToClipboard} from 'react-copy-to-clipboard'
+import { Link } from 'react-router-dom';
 
 export default function Interspot() {
     let redirect_uri = "http://10.0.0.17:3000/";
@@ -148,7 +149,7 @@ export default function Interspot() {
 
     return(
         <div className="header">
-            <a href="./"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></a>
+            <Link to="/"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></Link>
             {containerContent}
             <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2} selectedPlaylists1={selectedPlaylists1} selectedPlaylists2={selectedPlaylists2} generateIntersection={generateIntersection} restart={restart} goToPlaylistSelection={goToPlaylistSelection}/>
         </div>
