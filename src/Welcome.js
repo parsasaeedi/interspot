@@ -20,7 +20,6 @@ export default function Welcome() {
                             <span>Securely link your Spotify accounts</span>
                         </div>
                     </div>
-                    {/* <img className="arrow" />*/}
                     <div className="step">
                         <img src="img/two.png" className="number" alt="step one" />
                         <div className="screenshotWrapper">
@@ -30,7 +29,6 @@ export default function Welcome() {
                             <span>Select from your Playlists</span>
                         </div>
                     </div>
-                    {/* <img className="arrow" /> */}
                     <div className="step result">
                         <img src="img/three.png" className="number" alt="step one" />
                         <div className="screenshotWrapper">

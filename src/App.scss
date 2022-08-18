@@ -1,3 +1,5 @@
+$iphone: 62em;
+
 @font-face {
     font-family: Gotham;
     src: url(./fonts/GothamMedium.otf);
@@ -9,19 +11,38 @@
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
     font-family: Gotham;
-  }
+}
+
+.headerShort {
+    @media only screen and (max-width: $iphone) {
+        height: 100vh;
+    }
+}
+
+.headerLong {
+    height: 190vh;
+    @media only screen and (max-width: $iphone) {
+        height: 190vh;
+    }
+}
   
 .header {
     background-color: black;
-    height: 100vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
+    
+    @media only screen and (min-width: $iphone) {
+        height: 100vh;
+    }
 
     .interspotLogo {
         width: 10vw;
+        @media only screen and (max-width: $iphone) {
+            width: 50vw;
+        }
     }
 
     .welcomeContainer {
@@ -86,6 +107,13 @@
         align-items: center;
         justify-content: center;
     }
+
+    .containerWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 155vh;
+    }
   
     .container {
         background-color: #121212;
@@ -94,6 +122,11 @@
         height: 75vh;
         border-radius: 2vw;
         display: flex;
+        @media only screen and (max-width: $iphone) {
+            justify-content: center;
+            align-items: center;
+            border-radius: 7vw;
+        }
 
         .verticalLine {
             border-left: 1px solid #202020;
@@ -108,15 +141,23 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
+            @media only screen and (max-width: $iphone) {
+                width: 90%;
+                height: 90%;
+            }
 
             .name {
                 background-color: #202020;
-                border-radius: 2vw;
+                border-radius: 10vw;
                 width: 30%;
                 height: 6%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                @media only screen and (max-width: $iphone) {
+                    width: 60%;
+                    height: 8%;
+                }
 
                 input {
                     background-color: #202020;
@@ -127,6 +168,9 @@
                     color: #606060;
                     font-size: 1.1vw;
                     text-align: center;
+                    @media only screen and (max-width: $iphone) {
+                        font-size: 5vw;
+                    }
 
                     &::placeholder {
                         color: #606060;
@@ -140,11 +184,12 @@
             .profilePicture {
                 position: relative;
                 width: 50%;
-                // height: 0;
-                // padding-bottom: 60%;
                 border-radius: 100vw;
                 border: none;
                 background-color: black;
+                @media only screen and (max-width: $iphone) {
+                    width: 60%;
+                }
             }
 
             .guide {
@@ -152,6 +197,10 @@
                 font-size: 1.5vw;
                 text-align: center;
                 width: 70%;
+                @media only screen and (max-width: $iphone) {
+                    font-size: 6vw;
+                    width: 80%;
+                }
             }
 
             .playlistsContainer {
@@ -162,16 +211,24 @@
                 padding: 5%;
                 display: flex;
                 justify-content: center;
+                @media only screen and (max-width: $iphone) {
+                    border-radius: 4vw;
+                    height: 87%;
+                }
                 
                 .playlistsWrapper {
                     height: 100%;
                     width: 100%;
                     overflow: scroll;
-
                     display: grid;
                     grid-template-columns: 37% 37%;
                     gap: 10%;
                     justify-content: center;
+                    @media only screen and (max-width: $iphone) {
+                        max-width: 100%;
+                        overflow-x: hidden;
+                        grid-template-columns: 40% 40%;
+                    }
 
                     .playlist {
     
@@ -252,8 +309,7 @@
                 color: white;
                 height: 6%;
                 border: none;
-                border-radius: 2vw;
-                // width: 20%;
+                border-radius: 10vw;
                 padding-left: 3%;
                 padding-right: 3%;
                 font-size: 1.1vw;
@@ -262,6 +318,11 @@
                     background-color: #606060;
                     color: #202020;
                     cursor: not-allowed;
+                }
+                @media only screen and (max-width: $iphone) {
+                    width: 50%;
+                    height: 8%;
+                    font-size: 5vw;
                 }
             }
         }
@@ -276,12 +337,20 @@
             justify-content: space-between;
             font-size: 1.1vw;
             height: 25%;
+            @media only screen and (max-width: $iphone) {
+                font-size: 5vw;
+                height: 30%;
+            }
 
 
             .loadingAnimation {
                 width: 7vw;
                 height: 7vw;
                 position: relative;
+                @media only screen and (max-width: $iphone) {
+                    width: 25vw;
+                    height: 25vw;
+                }
             }
             
             .double-bounce1, .double-bounce2 {
@@ -328,29 +397,49 @@
             justify-content: space-evenly;
             align-items: center;
             width: 30%;
-            height: 80%;
+            height: 90%;
+            @media only screen and (max-width: $iphone) {
+                width: 90%;
+                height: 94%;
+                border-radius: 7vw;
+            }
 
             .intersectionName {
                 font-size: 1.5vw;
+                @media only screen and (max-width: $iphone) {
+                    font-size: 6vw;
+                }
             }
             .intersectionCover{
                 width: 80%;
                 border-radius: 1vw;
+                @media only screen and (max-width: $iphone) {
+                    border-radius: 5vw;
+                    width: 85%;
+                }
             }
             .intersectionLink {
                 width: 80%;
                 background-color: #606060;
                 height: 6%;
-                border-radius: 2vw;
+                border-radius: 10vw;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding-left: 3%;
+                @media only screen and (max-width: $iphone) {
+                    // width: 85%;
+                    // justify-content: center;
+                    display: none;
+                }
 
                 & a {
                     text-decoration: none;
                     font-size: 0.53vw;
                     color: white;
+                    @media only screen and (max-width: $iphone) {
+                        font-size: 1.8vw;
+                    }
                 }
 
                 button {
@@ -362,6 +451,9 @@
                     width: 15%;
                     font-size: 0.7vw;
                     cursor: pointer;
+                    @media only screen and (max-width: $iphone) {
+                        display: none;
+                    }
 
                     .copyIcon {
                         height: 1.5vh;
@@ -369,8 +461,25 @@
                     }
                 }
             }
+            .openInSpotify {
+                width: 80%;
+                background-color: #1ED760;
+                border-radius: 10vw;
+                height: 7%;
+                border: none;
+                color: white;
+                font-size: 1vw;
+                @media only screen and (max-width: $iphone) {
+                    font-size: 4vw;
+                    height: 9%;
+                }
+            }
             .playListIsInYourLibrary {
                 font-size: 0.8vw;
+                @media only screen and (max-width: $iphone) {
+                    font-size: 4vw;
+                    width: 70%;
+                }
             }
         }
 
@@ -382,12 +491,16 @@
     }
 
     .mainButton {
+        @media only screen and (max-width: $iphone) {
+            width: 55vw;
+            height: 15vw;
+            font-size: 7vw;
+        }
         background-color: #1ED760;
         color: white;
         width: 12vw;
         height: 3vw;
-        // padding: 1vw 3vw 3vw 1vw;
-        border-radius: 2vw;
+        border-radius: 10vw;
         border: none;
         font-size: 1.1vw;
         cursor: pointer;

@@ -98,16 +98,36 @@ export default function Interspot() {
         }
       }
 
-    let containerContent;
 
+    let device;
+    if((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+        device = "mobile"
+    } else {
+        device = "desktop"
+    }
+
+    let containerContent;
+    let headerClass;
     if (page === "signIn" || page === "playlistSelection") {
-        containerContent = 
-        <div className="container containerHorizontal">
-            <Content side="left" page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
-            <div className="verticalLine"></div>
-            <Content side="right" page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
-        </div>
+        headerClass = "header headerLong"
+        if (device === "desktop") {
+            containerContent = <div className="container containerHorizontal">
+                <Content side="left" page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
+                <div className="verticalLine"></div>
+                <Content side="right" page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
+            </div>
+        } else {
+            containerContent = <div className="containerWrapper">
+                <div className="container">
+                    <Content side="left" page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
+                </div>
+                <div className="container">
+                    <Content side="right" page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
+                </div>
+            </div>
+        }
     } else if (page === "waiting") {
+        headerClass = "header headerShort"
         containerContent = 
         <div className="container containerVertical">
             <div className="loading">
@@ -119,6 +139,7 @@ export default function Interspot() {
             </div>
         </div>
     } else if (page === "success") {
+        headerClass = "header headerShort"
         containerContent = 
         <div className="container containerVertical">
             <div className="loading">
@@ -127,6 +148,7 @@ export default function Interspot() {
             </div>
         </div>
     } else if (page === "result") {
+        headerClass = "header headerShort headerBlack"
         let intersectionLink = "https://open.spotify.com/playlist/" + intersectionId
         containerContent = 
         <div className="container containerVertical">
@@ -137,10 +159,12 @@ export default function Interspot() {
                     <a href={intersectionLink}>{intersectionLink}</a>
                     <button onClick={copyTextToClipboard(intersectionLink)}><img className="copyIcon" src="/img/CopyIcon.png" alt="Copy" /></button>
                 </div>
+                <button className="openInSpotify">OPEN IN SPOTIFY</button>
                 <span className="playListIsInYourLibrary">You can find this playlist in both of your libraries!</span>
             </div>
         </div>
     } else if (page === "noIntersection") {
+        headerClass = "header headerShort"
         containerContent = 
         <div className="container containerVertical">
             <span className="noIntersection">You have no songs in common :(</span>
@@ -148,7 +172,7 @@ export default function Interspot() {
     }
 
     return(
-        <div className="header">
+        <div className={headerClass}>
             <Link to="/"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></Link>
             {containerContent}
             <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2} selectedPlaylists1={selectedPlaylists1} selectedPlaylists2={selectedPlaylists2} generateIntersection={generateIntersection} restart={restart} goToPlaylistSelection={goToPlaylistSelection}/>

@@ -5,6 +5,7 @@ export default function MainButton(props) {
     const handleClick = () => {
         if (props.page === "signIn") {
             props.setPage("playlistSelection")
+            window.scrollTo(0,0); 
         } else if (props.page === "playlistSelection") {
             props.generateIntersection();
             props.setPage("waiting")

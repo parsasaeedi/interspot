@@ -11,9 +11,24 @@
   font-family: Gotham;
 }
 
+@media only screen and (max-width: 62em) {
+  .headerShort {
+    height: 100vh;
+  }
+}
+
+.headerLong {
+  height: 190vh;
+}
+
+@media only screen and (max-width: 62em) {
+  .headerLong {
+    height: 190vh;
+  }
+}
+
 .header {
   background-color: black;
-  height: 100vh;
   width: 100vw;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -30,8 +45,20 @@
           justify-content: space-evenly;
 }
 
+@media only screen and (min-width: 62em) {
+  .header {
+    height: 100vh;
+  }
+}
+
 .header .interspotLogo {
   width: 10vw;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .interspotLogo {
+    width: 50vw;
+  }
 }
 
 .header .welcomeContainer {
@@ -139,6 +166,20 @@
           justify-content: center;
 }
 
+.header .containerWrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  height: 155vh;
+}
+
 .header .container {
   background-color: #121212;
   width: 85vw;
@@ -147,6 +188,18 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    border-radius: 7vw;
+  }
 }
 
 .header .container .verticalLine {
@@ -173,9 +226,16 @@
           justify-content: space-between;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection, .header .container .signIn {
+    width: 90%;
+    height: 90%;
+  }
+}
+
 .header .container .playlistSelection .name, .header .container .signIn .name {
   background-color: #202020;
-  border-radius: 2vw;
+  border-radius: 10vw;
   width: 30%;
   height: 6%;
   display: -webkit-box;
@@ -189,6 +249,13 @@
           align-items: center;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection .name, .header .container .signIn .name {
+    width: 60%;
+    height: 8%;
+  }
+}
+
 .header .container .playlistSelection .name input, .header .container .signIn .name input {
   background-color: #202020;
   max-width: 80%;
@@ -200,6 +267,12 @@
   color: #606060;
   font-size: 1.1vw;
   text-align: center;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection .name input, .header .container .signIn .name input {
+    font-size: 5vw;
+  }
 }
 
 .header .container .playlistSelection .name input::-webkit-input-placeholder, .header .container .signIn .name input::-webkit-input-placeholder {
@@ -230,11 +303,24 @@
   background-color: black;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection .profilePicture, .header .container .signIn .profilePicture {
+    width: 60%;
+  }
+}
+
 .header .container .playlistSelection .guide, .header .container .signIn .guide {
   color: #606060;
   font-size: 1.5vw;
   text-align: center;
   width: 70%;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection .guide, .header .container .signIn .guide {
+    font-size: 6vw;
+    width: 80%;
+  }
 }
 
 .header .container .playlistSelection .playlistsContainer, .header .container .signIn .playlistsContainer {
@@ -251,6 +337,13 @@
           justify-content: center;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection .playlistsContainer, .header .container .signIn .playlistsContainer {
+    border-radius: 4vw;
+    height: 87%;
+  }
+}
+
 .header .container .playlistSelection .playlistsContainer .playlistsWrapper, .header .container .signIn .playlistsContainer .playlistsWrapper {
   height: 100%;
   width: 100%;
@@ -263,6 +356,15 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection .playlistsContainer .playlistsWrapper, .header .container .signIn .playlistsContainer .playlistsWrapper {
+    max-width: 100%;
+    overflow-x: hidden;
+    -ms-grid-columns: 40% 40%;
+        grid-template-columns: 40% 40%;
+  }
 }
 
 .header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlist, .header .container .signIn .playlistsContainer .playlistsWrapper .playlist {
@@ -374,7 +476,7 @@
   color: white;
   height: 6%;
   border: none;
-  border-radius: 2vw;
+  border-radius: 10vw;
   padding-left: 3%;
   padding-right: 3%;
   font-size: 1.1vw;
@@ -385,6 +487,14 @@
   background-color: #606060;
   color: #202020;
   cursor: not-allowed;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection button, .header .container .signIn button {
+    width: 50%;
+    height: 8%;
+    font-size: 5vw;
+  }
 }
 
 .header .container .loading {
@@ -410,10 +520,24 @@
   height: 25%;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .container .loading {
+    font-size: 5vw;
+    height: 30%;
+  }
+}
+
 .header .container .loading .loadingAnimation {
   width: 7vw;
   height: 7vw;
   position: relative;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .loading .loadingAnimation {
+    width: 25vw;
+    height: 25vw;
+  }
 }
 
 .header .container .loading .double-bounce1, .header .container .loading .double-bounce2 {
@@ -472,11 +596,25 @@
       -ms-flex-align: center;
           align-items: center;
   width: 30%;
-  height: 80%;
+  height: 90%;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .intersectionCard {
+    width: 90%;
+    height: 94%;
+    border-radius: 7vw;
+  }
 }
 
 .header .container .intersectionCard .intersectionName {
   font-size: 1.5vw;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .intersectionCard .intersectionName {
+    font-size: 6vw;
+  }
 }
 
 .header .container .intersectionCard .intersectionCover {
@@ -484,11 +622,18 @@
   border-radius: 1vw;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .container .intersectionCard .intersectionCover {
+    border-radius: 5vw;
+    width: 85%;
+  }
+}
+
 .header .container .intersectionCard .intersectionLink {
   width: 80%;
   background-color: #606060;
   height: 6%;
-  border-radius: 2vw;
+  border-radius: 10vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -501,10 +646,22 @@
   padding-left: 3%;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .container .intersectionCard .intersectionLink {
+    display: none;
+  }
+}
+
 .header .container .intersectionCard .intersectionLink a {
   text-decoration: none;
   font-size: 0.53vw;
   color: white;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .intersectionCard .intersectionLink a {
+    font-size: 1.8vw;
+  }
 }
 
 .header .container .intersectionCard .intersectionLink button {
@@ -518,13 +675,43 @@
   cursor: pointer;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .container .intersectionCard .intersectionLink button {
+    display: none;
+  }
+}
+
 .header .container .intersectionCard .intersectionLink button .copyIcon {
   height: 1.5vh;
   aspect-ratio: 1;
 }
 
+.header .container .intersectionCard .openInSpotify {
+  width: 80%;
+  background-color: #1ED760;
+  border-radius: 10vw;
+  height: 7%;
+  border: none;
+  color: white;
+  font-size: 1vw;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .intersectionCard .openInSpotify {
+    font-size: 4vw;
+    height: 9%;
+  }
+}
+
 .header .container .intersectionCard .playListIsInYourLibrary {
   font-size: 0.8vw;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .intersectionCard .playListIsInYourLibrary {
+    font-size: 4vw;
+    width: 70%;
+  }
 }
 
 .header .container .noIntersection {
@@ -537,7 +724,7 @@
   color: white;
   width: 12vw;
   height: 3vw;
-  border-radius: 2vw;
+  border-radius: 10vw;
   border: none;
   font-size: 1.1vw;
   cursor: pointer;
@@ -551,6 +738,14 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .mainButton {
+    width: 55vw;
+    height: 15vw;
+    font-size: 7vw;
+  }
 }
 
 .header .mainButton:disabled {
