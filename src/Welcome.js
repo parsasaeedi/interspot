@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Welcome() {
     return (
-        <div className="header">
+        <div className="header headerMedium">
             <a href="./"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></a>
             <div className="welcomeContainer">
                 <div className="about">
