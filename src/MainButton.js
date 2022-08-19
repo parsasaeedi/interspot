@@ -11,7 +11,7 @@ export default function MainButton(props) {
             props.setPage("waiting")
         } else if (props.page === "result") {
             props.restart()
-        } else if (props.page === "noIntersection") {
+        } else if (props.page === "error") {
             props.goToPlaylistSelection()
         }
     }
@@ -33,7 +33,7 @@ export default function MainButton(props) {
         button = <button className='mainButton' onClick={handleClick} disabled>WAITING...</button>
     } else if (props.page === "result") {
         button = <button className='mainButton' onClick={handleClick}>Restart</button>
-    } else if (props.page === "noIntersection") {
+    } else if (props.page === "error") {
         button = <button className='mainButton' onClick={handleClick}>Go back</button>
     }
 

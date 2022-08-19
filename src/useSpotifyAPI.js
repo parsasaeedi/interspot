@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage) {
 
     let redirect_uri = "http://10.0.0.17:3000/create";
     let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
@@ -106,6 +106,9 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         }
                         setUserId1(data.id)
                     }
+                }, function(err) {
+                    console.error(err);
+                    error()
                 }
             )
         } else if (side === "right") {
@@ -124,6 +127,9 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         setUserId2(data.id)
                             
                     }
+                }, function(err) {
+                    console.error(err);
+                    error()
                 }
             )
         }
@@ -153,6 +159,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             },
             function (err) {
                 console.error(err);
+                error()
             }
         ).then(
             async function() {
@@ -176,6 +183,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         },
                         function (err) {
                             console.error(err);
+                            error()
                         }
                     )
                 }))
@@ -209,6 +217,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             },
             function (err) {
                 console.error(err);
+                error()
             }
         ).then(
             async function() {
@@ -232,6 +241,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         },
                         function (err) {
                             console.error(err);
+                            error()
                         }
                     )
                 }))
@@ -263,6 +273,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             },
             function (err) {
                 console.error(err);
+                error()
             }
         )
     }
@@ -298,6 +309,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                                     })
                                 }, function (err) {
                                     console.error(err);
+                                    error()
                                 }
                             )
                         }))
@@ -308,6 +320,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 },
                 function (err) {
                     console.error(err);
+                    error()
                 }
             )
         }));
@@ -337,6 +350,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                                     })
                                 }, function (err) {
                                     console.error(err);
+                                    error()
                                 }
                             )
                         }))
@@ -347,6 +361,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 },
                 function (err) {
                     console.error(err);
+                    error()
                 }
             )
         }));
@@ -355,7 +370,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         let intersection = leftSongs.filter(song => rightSongs.includes(song));
         let intersectionURI = intersection.map(songId => {return "spotify:track:" + songId})
         if (intersection.length === 0) {
-            setPage("noIntersection")
+            error("You have no songs in common :(")
         } else {
             setPage("success")
             let successPromise = new Promise((resolve, reject) => {
@@ -388,14 +403,21 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         },
                         function(err) {
                             console.error(err);
+                            error()
                         }
                     )
                 },
                 function(err) {
                     console.error(err);
+                    error()
                 }
             )
         }
+    }
+
+    function error(message = "We ran into an error. Please Try again") {
+        setErrorMessage(message)
+        setPage("error")
     }
 
     return [requestAuthorization, generateIntersection];

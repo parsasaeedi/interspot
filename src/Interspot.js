@@ -34,6 +34,7 @@ export default function Interspot() {
     const [intersectionCover, setIntersectionCover] = useState("")
     const [playlistsStatus1, setPlaylistsStatus1] = useState("notRequested")
     const [playlistsStatus2, setPlaylistsStatus2] = useState("notRequested")
+    const [errorMessage, setErrorMessage] = useState("")
 
     useEffect(() => {
         storeStates()
@@ -72,7 +73,7 @@ export default function Interspot() {
         setSelectedPlaylists2([])
     }
 
-    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2);
+    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage);
 
     // event handlers
     const handleChangeName1 = ({target}) => setName1(target.value)
@@ -163,11 +164,11 @@ export default function Interspot() {
                 <span className="playListIsInYourLibrary">You can find this playlist in both of your libraries!</span>
             </div>
         </div>
-    } else if (page === "noIntersection") {
+    } else if (page === "error") {
         headerClass = "header headerShort"
         containerContent = 
         <div className="container containerVertical">
-            <span className="noIntersection">You have no songs in common :(</span>
+            <span className="error">{errorMessage}</span>
         </div>
     }
 
