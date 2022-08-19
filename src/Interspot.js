@@ -160,7 +160,7 @@ export default function Interspot() {
                     <a href={intersectionLink}>{intersectionLink}</a>
                     <button onClick={copyTextToClipboard(intersectionLink)}><img className="copyIcon" src="/img/CopyIcon.png" alt="Copy" /></button>
                 </div>
-                <button className="openInSpotify">OPEN IN SPOTIFY</button>
+                <a className="openInSpotify" href={intersectionLink}>OPEN IN SPOTIFY</a>
                 <span className="playListIsInYourLibrary">You can find this playlist in both of your libraries!</span>
             </div>
         </div>

@@ -506,9 +506,12 @@ $iphone: 62em;
                 background-color: #1ED760;
                 border-radius: 10vw;
                 height: 7%;
-                border: none;
                 color: white;
                 font-size: 1vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
                 @media only screen and (max-width: $iphone) {
                     font-size: 4vw;
                     height: 9%;
