@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.4c2ce761.css",
+    "main.js": "/static/js/main.d1bfd503.js",
+    "static/media/GothamMedium.otf": "/static/media/GothamMedium.d389f818c66bef9128ef.otf",
+    "index.html": "/index.html",
+    "main.4c2ce761.css.map": "/static/css/main.4c2ce761.css.map",
+    "main.d1bfd503.js.map": "/static/js/main.d1bfd503.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4c2ce761.css",
+    "static/js/main.d1bfd503.js"
+  ]
+}
