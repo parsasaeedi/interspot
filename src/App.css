@@ -11,6 +11,10 @@
   font-family: Gotham;
 }
 
+html {
+  background-color: black;
+}
+
 @media only screen and (max-width: 62em) {
   .headerShort {
     height: 100vh;

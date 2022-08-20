@@ -13,6 +13,10 @@ $iphone: 62em;
     font-family: Gotham;
 }
 
+html {
+    background-color: black;
+}
+
 .headerShort {
     @media only screen and (max-width: $iphone) {
         height: 100vh;

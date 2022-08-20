@@ -5,6 +5,7 @@ export default function Welcome(props) {
     function handleButton() {
         props.setPage("signIn")
         sessionStorage.setItem('page', "signIn");
+        window.scrollTo(0,0); 
     }
 
     return (
