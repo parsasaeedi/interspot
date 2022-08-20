@@ -1,11 +1,11 @@
 import './App.css';
 import Interspot from './Interspot'
 import Welcome from './Welcome';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, HashRouter} from 'react-router-dom';
 
 function App() {
   return (
-    <Router>
+    <HashRouter>
       <div className="App">
         <Switch>
           <Route exact path="/">
@@ -16,7 +16,7 @@ function App() {
           </Route>
         </Switch>
       </div>
-    </Router>
+    </HashRouter>
   );
 }
 
