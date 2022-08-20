@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2) {
 
     let redirect_uri = "http://10.0.0.17:3000/create";
     let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
@@ -65,8 +65,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
     
     function handleAuthorizationResponse(){
         if ( this.status == 200 ){
-            var data = JSON.parse(this.responseText);
-            var data = JSON.parse(this.responseText);
+            let data = JSON.parse(this.responseText);
             if ( data.access_token != undefined ){
                 if (whoAsked === "left") {
                     setAccess_token1(data.access_token);
@@ -74,12 +73,23 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                     getPlaylists1()
                     setAccountInfo("left")
                     setSignedIn1(true)
+                    setLogInTime1(Date.now())
                 } else {
                     setAccess_token2(data.access_token);
                     spotifyApi2.setAccessToken(data.access_token);
                     getPlaylists2()
                     setAccountInfo("right")
                     setSignedIn2(true)
+                    setLogInTime2(Date.now())
+                }
+            }
+            if ( data.refresh_token  != undefined ){
+                if (whoAsked === "left") {
+                    setRefresh_token1(data.refresh_token)
+                    localStorage.setItem("refresh_token1", data.refresh_token);
+                } else {
+                    setRefresh_token2(data.refresh_token)
+                    localStorage.setItem("refresh_token2", data.refresh_token);
                 }
             }
             onPageLoad();
@@ -88,6 +98,45 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             console.log(this.responseText);
         }
 
+    }
+
+    function refreshAccessToken(side, resolve){
+        let body = "grant_type=refresh_token";
+        body += "&refresh_token=" + (side === "left" ? refresh_token1 : refresh_token2);
+        body += "&client_id=" + client_id;
+
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", TOKEN, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.setRequestHeader('Authorization', 'Basic ' + btoa(client_id + ":" + client_secret));
+        xhr.send(body);
+        xhr.onload = () => {
+            if (xhr.status === 200) {
+                let data = JSON.parse(xhr.response);
+                if ( data.access_token != undefined ){
+                    if (side === "left") {
+                        setAccess_token1(data.access_token);
+                        spotifyApi1.setAccessToken(data.access_token);
+                    } else {
+                        setAccess_token2(data.access_token);
+                        spotifyApi2.setAccessToken(data.access_token);
+                    }
+                }
+                if ( data.refresh_token  != undefined ){
+                    if (side === "left") {
+                        setRefresh_token1(data.refresh_token)
+                        localStorage.setItem("refresh_token1", data.refresh_token);
+                    } else {
+                        setRefresh_token2(data.refresh_token)
+                        localStorage.setItem("refresh_token2", data.refresh_token);
+                    }
+                }
+                resolve()
+            } else {
+                console.log(xhr.status)
+                error()
+            }
+        }
     }
 
     function setAccountInfo(side) {
@@ -281,6 +330,20 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
     async function generateIntersection() {
         spotifyApi1.setAccessToken(access_token1);
         spotifyApi2.setAccessToken(access_token2);
+        let refreshAccessTokenPromise1
+        let refreshAccessTokenPromise2
+        if (Date.now() - logInTime1 > 3480000) {
+            refreshAccessTokenPromise1 = new Promise((resolve, reject) => {
+                refreshAccessToken("left", resolve)
+            })
+        }
+        if (Date.now() - logInTime2 > 3480000) {
+            refreshAccessTokenPromise2 = new Promise((resolve, reject) => {
+                refreshAccessToken("right", resolve)
+            })
+        }
+        await refreshAccessTokenPromise1
+        await refreshAccessTokenPromise2
         let leftSongs = [];
         let rightSongs = [];
         let leftPromises =  Promise.all(selectedPlaylists1.map(async (playlist) => {
@@ -288,7 +351,6 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             .then(
                 async function (data) {
                     await (async function() {
-                        // console.log(data);
                         for (let song in data.items) {
                             leftSongs.push(data.items[song].track.id)
                         }
