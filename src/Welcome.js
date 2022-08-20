@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from 'react-router-dom';
 
-export default function Welcome() {
+export default function Welcome(props) {
+
+    function handleButton() {
+        props.setPage("signIn")
+        sessionStorage.setItem('page', "signIn");
+    }
+
     return (
         <div className="header headerMedium">
             <a href="./"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></a>
@@ -40,7 +45,7 @@ export default function Welcome() {
                     </div>
                 </div>
             </div>
-            <Link to="/create" className="mainButton">CONTINUE</Link>
+            <button onClick={handleButton} className="mainButton">CONTINUE</button>
         </div>
     )
 }

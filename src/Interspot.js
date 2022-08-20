@@ -5,16 +5,12 @@ import useSpotifyAPI from './useSpotifyAPI';
 import MainButton from './MainButton';
 import Content from './Content';
 import {CopyToClipboard} from 'react-copy-to-clipboard'
-import { Link } from 'react-router-dom';
+import Welcome from './Welcome';
 
 export default function Interspot() {
-    let redirect_uri = "http://10.0.0.17:3000/";
-    let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
-    let client_secret = "636fe3d7e2ee4e7087c2e1f7579a3e06"
-    const AUTHORIZE = "https://accounts.spotify.com/authorize"
 
     // states
-    const [page, setPage] = useState("signIn")
+    const [page, setPage] = useState(sessionStorage.getItem('page') ?? "welcome")
     const [name1, setName1] = useState(sessionStorage.getItem('name1') ?? "")
     const [name2, setName2] = useState(sessionStorage.getItem('name2') ?? "")
     const [signedIn1, setSignedIn1] = useState(sessionStorage.getItem('signedIn1') ?? "")
@@ -66,7 +62,7 @@ export default function Interspot() {
         sessionStorage.setItem('logInTime1', logInTime1);
         sessionStorage.setItem('logInTime2', logInTime2);
         sessionStorage.setItem('refresh_token1', refresh_token1);
-        sessionStorage.setItem('refresh_token2', refresh_token1);
+        sessionStorage.setItem('refresh_token2', refresh_token2);
     }
 
     function restart() {
@@ -101,11 +97,15 @@ export default function Interspot() {
 
     function copyTextToClipboard(text) {
         if ('clipboard' in navigator) {
-          navigator.clipboard.writeText(text);
+        navigator.clipboard.writeText(text);
         } else {
-          document.execCommand('copy', true, text);
+        document.execCommand('copy', true, text);
         }
-      }
+    }
+    const handleWelcomeButton = () => {
+        // setPage("signIn")
+        // setFirstVisit(true)
+    }
 
 
     let device;
@@ -180,11 +180,18 @@ export default function Interspot() {
         </div>
     }
 
-    return(
-        <div className={headerClass}>
-            <Link to="/"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></Link>
-            {containerContent}
-            <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2} selectedPlaylists1={selectedPlaylists1} selectedPlaylists2={selectedPlaylists2} generateIntersection={generateIntersection} restart={restart} goToPlaylistSelection={goToPlaylistSelection}/>
-        </div>
-    )
+    if (page === "welcome") {
+        return (
+            <Welcome setPage={setPage}  />
+        )
+    } else {
+        return(
+            <div className={headerClass}>
+                <a href="./"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></a>
+                {containerContent}
+                <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2} selectedPlaylists1={selectedPlaylists1} selectedPlaylists2={selectedPlaylists2} generateIntersection={generateIntersection} restart={restart} goToPlaylistSelection={goToPlaylistSelection}/>
+            </div>
+        )
+    }
+
 }
