@@ -36,30 +36,6 @@ export default function Interspot() {
     const [logInTime1, setLogInTime1] = useState(sessionStorage.getItem('logInTime1') ?? "")
     const [logInTime2, setLogInTime2] = useState(sessionStorage.getItem('logInTime2') ?? "")
 
-    useEffect(() => {
-        storeStates()
-    }, [name1, name2, access_token1, access_token2, signedIn1, signedIn2, profilePicture1, profilePicture2, playlists1, playlists2, logInTime1, logInTime2, refresh_token1, refresh_token2])
-
-
-    function storeStates() {
-        sessionStorage.setItem('name1', name1);
-        sessionStorage.setItem('name2', name2);
-        sessionStorage.setItem('access_token1', access_token1);
-        sessionStorage.setItem('access_token2', access_token2);
-        sessionStorage.setItem('signedIn1', signedIn1);
-        sessionStorage.setItem('signedIn2', signedIn2);
-        sessionStorage.setItem('profilePicture1', profilePicture1);
-        sessionStorage.setItem('profilePicture2', profilePicture2);
-        sessionStorage.setItem('userId1', userId1);
-        sessionStorage.setItem('userId2', userId2);
-        sessionStorage.setItem('playlists1', JSON.stringify(playlists1));
-        sessionStorage.setItem('playlists2', JSON.stringify(playlists2));
-        sessionStorage.setItem('logInTime1', logInTime1);
-        sessionStorage.setItem('logInTime2', logInTime2);
-        sessionStorage.setItem('refresh_token1', refresh_token1);
-        sessionStorage.setItem('refresh_token2', refresh_token2);
-    }
-
     function restart() {
         setPage("signIn")
         setSelectedPlaylists1([])
@@ -72,19 +48,23 @@ export default function Interspot() {
         setSelectedPlaylists2([])
     }
 
-    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2);
+    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2);
 
     // event handlers
-    const handleChangeName1 = ({target}) => setName1(target.value)
-    const handleChangeName2 = ({target}) => setName2(target.value)
+    const handleChangeName1 = ({target}) => {
+        setName1(target.value)
+        sessionStorage.setItem('name1', target.value);
+    }
+    const handleChangeName2 = ({target}) => {
+        setName2(target.value)
+        sessionStorage.setItem('name2', target.value);
+    }
     const handleLinkButton1 = ({target}) => {
-        storeStates()
         sessionStorage.setItem('whoAsked', "left");
         requestAuthorization();
         // Do stuff
     }
     const handleLinkButton2 = ({target}) => {
-        storeStates()
         sessionStorage.setItem('whoAsked', "right");
         requestAuthorization();
         // Do stuff

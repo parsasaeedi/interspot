@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2) {
 
     let redirect_uri = "https://interspot.net/";
     // let redirect_uri = "http://10.0.0.17:3000/";
@@ -75,27 +75,33 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             if ( data.access_token != undefined ){
                 if (whoAsked === "left") {
                     setAccess_token1(data.access_token);
+                    sessionStorage.setItem("access_token1", data.access_token);
                     spotifyApi.setAccessToken(data.access_token);
                     getPlaylists1()
                     setAccountInfo("left")
                     setSignedIn1(true)
+                    sessionStorage.setItem("signedIn1", true);
                     setLogInTime1(Date.now())
+                    sessionStorage.setItem("logInTime1", Date.now());
                 } else {
                     setAccess_token2(data.access_token);
+                    sessionStorage.setItem("access_token2", data.access_token);
                     spotifyApi.setAccessToken(data.access_token);
                     getPlaylists2()
                     setAccountInfo("right")
                     setSignedIn2(true)
+                    sessionStorage.setItem("signedIn2", true);
                     setLogInTime2(Date.now())
+                    sessionStorage.setItem("logInTime2", Date.now());
                 }
             }
             if ( data.refresh_token  != undefined ){
                 if (whoAsked === "left") {
                     setRefresh_token1(data.refresh_token)
-                    localStorage.setItem("refresh_token1", data.refresh_token);
+                    sessionStorage.setItem("refresh_token1", data.refresh_token);
                 } else {
                     setRefresh_token2(data.refresh_token)
-                    localStorage.setItem("refresh_token2", data.refresh_token);
+                    sessionStorage.setItem("refresh_token2", data.refresh_token);
                 }
             }
             onPageLoad();
@@ -122,19 +128,21 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 if ( data.access_token != undefined ){
                     if (side === "left") {
                         setAccess_token1(data.access_token);
+                        sessionStorage.setItem("access_token1", data.access_token);
                         spotifyApi.setAccessToken(data.access_token);
                     } else if (side === "right") {
                         setAccess_token2(data.access_token);
+                        sessionStorage.setItem("access_token2", data.access_token);
                         spotifyApi.setAccessToken(data.access_token);
                     }
                 }
                 if ( data.refresh_token  != undefined ){
                     if (side === "left") {
                         setRefresh_token1(data.refresh_token)
-                        localStorage.setItem("refresh_token1", data.refresh_token);
+                        sessionStorage.setItem("refresh_token1", data.refresh_token);
                     } else if (side === "right") {
                         setRefresh_token2(data.refresh_token)
-                        localStorage.setItem("refresh_token2", data.refresh_token);
+                        sessionStorage.setItem("refresh_token2", data.refresh_token);
                     }
                 }
                 resolve()
@@ -154,13 +162,17 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                     if (data != null) {
                         if (data.display_name != null) {
                             setName1(data.display_name)
+                            sessionStorage.setItem("name1", data.display_name);
                         }
                         if (data.images[0] != null) {
                             setProfilePicture1(data.images[0].url)
+                            sessionStorage.setItem("profilePicture1", data.images[0].url);
                         } else {
                             setProfilePicture1("/img/DefaultProfilePicture.jpg")
+                            sessionStorage.setItem("profilePicture1", "/img/DefaultProfilePicture.jpg");
                         }
                         setUserId1(data.id)
+                        sessionStorage.setItem("userId1", data.id);
                     }
                 }, function(err) {
                     console.error(err);
@@ -175,13 +187,17 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                     if (data != null) {
                         if (data.display_name != null) {
                             setName2(data.display_name)
+                            sessionStorage.setItem("name2", data.display_name);
                         }
                         if (data.images[0] != null) {
                             setProfilePicture2(data.images[0].url)
+                            sessionStorage.setItem("profilePicture2", data.images[0].url);
                         } else {
                             setProfilePicture2("/img/DefaultProfilePicture.jpg")
+                            sessionStorage.setItem("profilePicture2", "/img/DefaultProfilePicture.jpg");
                         }
                         setUserId2(data.id)
+                        sessionStorage.setItem("userId2", data.id);
                             
                     }
                 }, function(err) {
@@ -246,7 +262,8 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                     )
                 }))
                 await playlistPromises;
-                setPlaylists1(tempPlaylists1);
+                setPlaylists1(tempPlaylists1); 
+                sessionStorage.setItem("playlists1", JSON.stringify(tempPlaylists1));
                 setPlaylistsStatus1("received")
             }
         )
@@ -305,6 +322,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 }))
                 await playlistPromises;
                 setPlaylists2(tempPlaylists2);
+                sessionStorage.setItem("playlists2", JSON.stringify(tempPlaylists2));
                 setPlaylistsStatus2("received")
             }
         )
