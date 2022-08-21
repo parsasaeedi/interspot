@@ -41,11 +41,6 @@ export default function Interspot() {
     }, [name1, name2, access_token1, access_token2, signedIn1, signedIn2, profilePicture1, profilePicture2, playlists1, playlists2, logInTime1, logInTime2, refresh_token1, refresh_token2])
 
 
-    // Spotify API
-    let SpotifyWebApi = require('spotify-web-api-js');
-    let spotifyApi = new SpotifyWebApi();
-
-
     function storeStates() {
         sessionStorage.setItem('name1', name1);
         sessionStorage.setItem('name2', name2);
@@ -77,7 +72,7 @@ export default function Interspot() {
         setSelectedPlaylists2([])
     }
 
-    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2);
+    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2);
 
     // event handlers
     const handleChangeName1 = ({target}) => setName1(target.value)
