@@ -1,70 +1,14 @@
-# Getting Started with Create React App
+# Interspot
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+No more fighting over the music. Easily create a playlist with songs that you both like.
 
-## Available Scripts
+<img width="1920" alt="Screen Shot 2022-08-20 at 12 43 33 PM" src="https://user-images.githubusercontent.com/48306717/185770481-0eda014f-1688-442c-a074-19789b7e5795.png">
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<img width="1920" alt="Screen Shot 2022-08-20 at 12 43 45 PM" src="https://user-images.githubusercontent.com/48306717/185770486-c4451eaf-af98-4fef-b1b3-374463ad4ed3.png">
+<img width="1920" alt="Screen Shot 2022-08-20 at 12 43 58 PM" src="https://user-images.githubusercontent.com/48306717/185770491-264779c1-fd89-487a-9d0c-8ca5b329215b.png">
+<img width="1920" alt="Screen Shot 2022-08-20 at 12 44 08 PM" src="https://user-images.githubusercontent.com/48306717/185770493-d47ccc04-344e-458f-ac22-253e9f4a80ea.png">
+<img width="1920" alt="Screen Shot 2022-08-20 at 12 44 54 PM" src="https://user-images.githubusercontent.com/48306717/185770504-ad4dc7c4-0f20-419d-a0f5-68b14d44dbb2.png">
+<img width="1920" alt="Screen Shot 2022-08-20 at 12 46 10 PM" src="https://user-images.githubusercontent.com/48306717/185770507-dc5248fc-d663-4590-b1e2-a1940d070a0b.png">
+<img width="1920" alt="Screen Shot 2022-08-20 at 12 46 38 PM" src="https://user-images.githubusercontent.com/48306717/185770511-d719ff52-f510-4029-af81-37c25b0ea75d.png">
+<img width="1920" alt="Screen Shot 2022-08-20 at 12 46 45 PM" src="https://user-images.githubusercontent.com/48306717/185770554-96792072-8447-4ddb-9a98-fc6a5aab018f.png">
+<img width="1920" alt="Screen Shot 2022-08-20 at 5 10 21 PM" src="https://user-images.githubusercontent.com/48306717/185770520-5cbe00bc-c143-4385-b197-622784596d68.png">
