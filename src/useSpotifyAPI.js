@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi1, spotifyApi2, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2) {
+export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, spotifyApi, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, storeStates, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2) {
 
     let redirect_uri = "https://interspot.net/";
     // let redirect_uri = "http://10.0.0.17:3000/";
@@ -60,24 +60,24 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         url += "&response_type=code";
         url += "&redirect_uri=" + encodeURI(redirect_uri);
         url += "&show_dialog=true";
-        url += "&scope=user-read-private user-library-read playlist-read-private playlist-modify-public";
+        url += "&scope=user-read-private user-library-read user-library-modify playlist-read-private playlist-modify-public playlist-modify-private";
         window.location.href = url; // Show Spotify's authorization screen
     }
     
-    function handleAuthorizationResponse(){
+    async function handleAuthorizationResponse(){
         if ( this.status == 200 ){
             let data = JSON.parse(this.responseText);
             if ( data.access_token != undefined ){
                 if (whoAsked === "left") {
                     setAccess_token1(data.access_token);
-                    spotifyApi1.setAccessToken(data.access_token);
+                    spotifyApi.setAccessToken(data.access_token);
                     getPlaylists1()
                     setAccountInfo("left")
                     setSignedIn1(true)
                     setLogInTime1(Date.now())
                 } else {
                     setAccess_token2(data.access_token);
-                    spotifyApi2.setAccessToken(data.access_token);
+                    spotifyApi.setAccessToken(data.access_token);
                     getPlaylists2()
                     setAccountInfo("right")
                     setSignedIn2(true)
@@ -117,17 +117,17 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 if ( data.access_token != undefined ){
                     if (side === "left") {
                         setAccess_token1(data.access_token);
-                        spotifyApi1.setAccessToken(data.access_token);
-                    } else {
+                        spotifyApi.setAccessToken(data.access_token);
+                    } else if (side === "right") {
                         setAccess_token2(data.access_token);
-                        spotifyApi2.setAccessToken(data.access_token);
+                        spotifyApi.setAccessToken(data.access_token);
                     }
                 }
                 if ( data.refresh_token  != undefined ){
                     if (side === "left") {
                         setRefresh_token1(data.refresh_token)
                         localStorage.setItem("refresh_token1", data.refresh_token);
-                    } else {
+                    } else if (side === "right") {
                         setRefresh_token2(data.refresh_token)
                         localStorage.setItem("refresh_token2", data.refresh_token);
                     }
@@ -142,7 +142,8 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
 
     function setAccountInfo(side) {
         if (side === "left") {
-            spotifyApi1.getMe()
+            // spotifyApi.setAccessToken(access_token1)
+            spotifyApi.getMe()
             .then(
                 function(data) {
                     if (data != null) {
@@ -162,7 +163,8 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 }
             )
         } else if (side === "right") {
-            spotifyApi2.getMe()
+            // spotifyApi.setAccessToken(access_token2)
+            spotifyApi.getMe()
             .then(
                 function(data) {
                     if (data != null) {
@@ -188,10 +190,11 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
 
     function getPlaylists1() {
         // spotifyApi1.setAccessToken(access_token1);
+        // spotifyApi.setAccessToken(access_token1)
         setPlaylistsStatus1("requested")
         let total;
         let tempPlaylists1 = [];
-        spotifyApi1.getUserPlaylists({ limit: 50 })
+        spotifyApi.getUserPlaylists({ limit: 50 })
         .then(
             function (data) {
                 if (data != null) {
@@ -215,7 +218,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             async function() {
                 let offsets = [...Array(Math.ceil((total-50)/50)).keys()]
                 let playlistPromises = Promise.all(offsets.map(async (offset) => {
-                    await spotifyApi1.getUserPlaylists({ limit: 50, offset: (offset+1)*50})
+                    await spotifyApi.getUserPlaylists({ limit: 50, offset: (offset+1)*50})
                     .then(
                         function (data) {
                             for (var key in data.items) {
@@ -245,11 +248,11 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
     }
 
     function getPlaylists2() {
-        // spotifyApi2.setAccessToken(access_token2);
+        // spotifyApi.setAccessToken(access_token2)
         setPlaylistsStatus2("requested")
         let total;
         let tempPlaylists2 = [];
-        spotifyApi2.getUserPlaylists({ limit: 50 })
+        spotifyApi.getUserPlaylists({ limit: 50 })
         .then(
             function (data) {
                 if (data != null) {
@@ -273,7 +276,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             async function() {
                 let offsets = [...Array(Math.ceil((total-50)/50)).keys()]
                 let playlistPromises = Promise.all(offsets.map(async (offset) => {
-                    await spotifyApi2.getUserPlaylists({ limit: 50, offset: (offset+1)*50})
+                    await spotifyApi.getUserPlaylists({ limit: 50, offset: (offset+1)*50})
                     .then(
                         function (data) {
                             for (var key in data.items) {
@@ -303,7 +306,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
     }
 
     const getNextSongs = async (next, songs) => {
-        await spotifyApi1.getGeneric(next)
+        await spotifyApi.getGeneric(next)
         .then(
             async function (data) {
                 if (data != null) {
@@ -329,8 +332,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
     }
 
     async function generateIntersection() {
-        spotifyApi1.setAccessToken(access_token1);
-        spotifyApi2.setAccessToken(access_token2);
+        spotifyApi.setAccessToken(access_token1);
         let refreshAccessTokenPromise1
         let refreshAccessTokenPromise2
         if (Date.now() - logInTime1 > 3480000) {
@@ -348,7 +350,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         let leftSongs = [];
         let rightSongs = [];
         let leftPromises =  Promise.all(selectedPlaylists1.map(async (playlist) => {
-            await spotifyApi1.getPlaylistTracks(playlist)
+            await spotifyApi.getPlaylistTracks(playlist)
             .then(
                 async function (data) {
                     await (async function() {
@@ -358,7 +360,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         let total = data.total;
                         let songOffsets = [...Array(Math.ceil(total/100)-1).keys()]
                         await Promise.all(songOffsets.map(async (offset) => {
-                            await spotifyApi1.getPlaylistTracks(playlist, {offset: (offset+1)*100})
+                            await spotifyApi.getPlaylistTracks(playlist, {offset: (offset+1)*100})
                             .then(
                                 function (data2) {
                                     // console.log(data2);
@@ -388,7 +390,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
             )
         }));
         let rightPromises = Promise.all(selectedPlaylists2.map(async (playlist) => {
-            await spotifyApi1.getPlaylistTracks(playlist)
+            await spotifyApi.getPlaylistTracks(playlist)
             .then(
                 async function (data) {
                     await (async function() {
@@ -399,7 +401,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         let total = data.total;
                         let songOffsets = [...Array(Math.ceil(total/100)-1).keys()]
                         await Promise.all(songOffsets.map(async (offset) => {
-                            await spotifyApi2.getPlaylistTracks(playlist, {offset: (offset+1)*100})
+                            await spotifyApi.getPlaylistTracks(playlist, {offset: (offset+1)*100})
                             .then(
                                 function (data2) {
                                     // console.log(data2);
@@ -441,23 +443,24 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                     resolve()
                 }, 2000);
             })
-            await spotifyApi1.createPlaylist(userId1, {name: (name1 + " and " + name2)})
+            await spotifyApi.createPlaylist(userId1, {name: (name1 + " and " + name2)})
             .then(
                 async function(data) {
                     let playlistId = data.id
                     setIntersectionId(playlistId)
                     let intersectionOffsets = [...Array(Math.ceil(intersection.length/100)).keys()]
                     let addTracksPromises = Promise.all(intersectionOffsets.map(async (offset) => {
-                        await spotifyApi1.addTracksToPlaylist(playlistId, intersectionURI.slice(offset*100, (offset+1)*100))
+                        await spotifyApi.addTracksToPlaylist(playlistId, intersectionURI.slice(offset*100, (offset+1)*100))
                         return new Promise((resolve, reject) => {
                             resolve()
                         })
                     }))
                     await addTracksPromises
                     if (userId1 != userId2) {
-                        spotifyApi2.followPlaylist(playlistId)
+                        spotifyApi.setAccessToken(access_token2)
+                        spotifyApi.followPlaylist(playlistId)
                     }
-                    await spotifyApi1.getPlaylistCoverImage(playlistId)
+                    await spotifyApi.getPlaylistCoverImage(playlistId)
                     .then(
                         async function(data2) {
                             await setIntersectionCover(data2[0].url)
