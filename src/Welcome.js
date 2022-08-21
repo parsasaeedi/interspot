@@ -13,7 +13,7 @@ export default function Welcome(props) {
             <a href="./"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></a>
             <div className="welcomeContainer">
                 <div className="about">
-                    <span>No more fighting for the AUX.</span>
+                    <span>No more fighting over the music.</span>
                     <span>Easily create a playlist with songs that you both like.</span>
                 </div>
                 <div className="steps">
