@@ -45,9 +45,6 @@ export default function Interspot() {
     let SpotifyWebApi = require('spotify-web-api-js');
     let spotifyApi = new SpotifyWebApi();
 
-    // console.log(spotifyApi1.getAccessToken());
-    // console.log(spotifyApi2.getAccessToken());
-
 
     function storeStates() {
         sessionStorage.setItem('name1', name1);
@@ -104,10 +101,6 @@ export default function Interspot() {
         } else {
         document.execCommand('copy', true, text);
         }
-    }
-    const handleWelcomeButton = () => {
-        // setPage("signIn")
-        // setFirstVisit(true)
     }
 
 

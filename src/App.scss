@@ -568,6 +568,9 @@ html {
     }
 
     .startOnGitHub {
+        @media only screen and (max-width: $iphone) {
+            display: none;
+        }
         position: absolute;
         right: 0.5vw;
         bottom: 0.5vw;
@@ -589,6 +592,9 @@ html {
     }
 
     .openSource {
+        @media only screen and (max-width: $iphone) {
+            display: none;
+        }
         position: absolute;
         right: 0.5vw;
         bottom: 0.5vw;

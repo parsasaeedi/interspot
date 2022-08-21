@@ -868,6 +868,12 @@ html {
   border-radius: 10vw;
 }
 
+@media only screen and (max-width: 62em) {
+  .header .startOnGitHub {
+    display: none;
+  }
+}
+
 .header .startOnGitHub svg {
   fill: #606060;
   height: 50%;
@@ -879,5 +885,11 @@ html {
   bottom: 0.5vw;
   color: #606060;
   font-size: 0.5vw;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .openSource {
+    display: none;
+  }
 }
 /*# sourceMappingURL=App.css.map */
