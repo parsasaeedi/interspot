@@ -127,6 +127,7 @@ export default function Interspot() {
                 <Content side="left" page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
                 <div className="verticalLine"></div>
                 <Content side="right" page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
+                <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
             </div>
         } else {
             containerContent = <div className="containerWrapper">
@@ -136,6 +137,7 @@ export default function Interspot() {
                 <div className="container">
                     <Content side="right" page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
                 </div>
+                <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
             </div>
         }
     } else if (page === "waiting") {
@@ -149,6 +151,7 @@ export default function Interspot() {
                     <div className="double-bounce2"></div>
                 </div>
             </div>
+            <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
     } else if (page === "success") {
         headerClass = "header headerShort"
@@ -158,6 +161,7 @@ export default function Interspot() {
                 <span>Playlist Generated!</span>
                 <img className="loadingAnimation" src="/img/success.gif" alt="success"/>
             </div>
+            <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
     } else if (page === "result") {
         headerClass = "header headerShort headerBlack"
@@ -174,12 +178,17 @@ export default function Interspot() {
                 <a className="openInSpotify" href={intersectionLink}>OPEN IN SPOTIFY</a>
                 <span className="playListIsInYourLibrary">You can find this playlist in both of your libraries!</span>
             </div>
+            <a className="startOnGitHub" href="https://github.com/parsasaeedi/interspot" rel="noopener" target="_blank" aria-label="Star adamgiebl/neumorphism on GitHub">
+                <svg viewBox="0 0 16 16" class="octicon octicon-star" aria-hidden="true"><path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"></path></svg>
+                <span>Star on GitHub</span>
+            </a>
         </div>
     } else if (page === "error") {
         headerClass = "header headerShort"
         containerContent = 
         <div className="container containerVertical">
             <span className="error">{errorMessage}</span>
+            <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
     }
 

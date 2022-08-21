@@ -47,6 +47,7 @@ export default function Welcome(props) {
                 </div>
             </div>
             <button onClick={handleButton} className="mainButton">CONTINUE</button>
+            <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
     )
 }

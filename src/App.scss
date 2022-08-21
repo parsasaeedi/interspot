@@ -566,4 +566,34 @@ html {
             cursor: not-allowed;
         }
     }
+
+    .startOnGitHub {
+        position: absolute;
+        right: 0.5vw;
+        bottom: 0.5vw;
+        color: #606060;
+        text-decoration: none;
+        font-size: 0.8vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        justify-items: center;
+        background-color: #202020;
+        height: 2vw;
+        width: 8.5vw;
+        border-radius: 10vw;
+        svg {
+            fill: #606060;
+            height: 50%;
+        }
+    }
+
+    .openSource {
+        position: absolute;
+        right: 0.5vw;
+        bottom: 0.5vw;
+        color: #606060;
+        // text-decoration: none;
+        font-size: 0.5vw;
+    }
 }
