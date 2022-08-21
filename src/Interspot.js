@@ -23,10 +23,6 @@ export default function Interspot() {
     const [playlists2, setPlaylists2] = useState(JSON.parse(sessionStorage.getItem('playlists2')) ?? [])
     const [selectedPlaylists1, setSelectedPlaylists1] = useState([])
     const [selectedPlaylists2, setSelectedPlaylists2] = useState([])
-    const [access_token1, setAccess_token1] = useState(sessionStorage.getItem('access_token1') ?? "")
-    const [access_token2, setAccess_token2] = useState(sessionStorage.getItem('access_token2') ?? "")
-    const [refresh_token1, setRefresh_token1] = useState(sessionStorage.getItem('refresh_token1') ?? "")
-    const [refresh_token2, setRefresh_token2] = useState(sessionStorage.getItem('refresh_token2') ?? "")
     const [whoAsked, setWhoAsked] = useState(sessionStorage.getItem('whoAsked') ?? "")
     const [intersectionId, setIntersectionId] = useState("")
     const [intersectionCover, setIntersectionCover] = useState("")
@@ -48,7 +44,7 @@ export default function Interspot() {
         setSelectedPlaylists2([])
     }
 
-    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, access_token1, setAccess_token1, access_token2, setAccess_token2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, refresh_token1, refresh_token2, setRefresh_token1, setRefresh_token2, logInTime1, logInTime2, setLogInTime1, setLogInTime2);
+    const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, logInTime1, logInTime2, setLogInTime1, setLogInTime2);
 
     // event handlers
     const handleChangeName1 = ({target}) => {
