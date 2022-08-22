@@ -2,6 +2,7 @@ import React from "react";
 
 export default function MainButton(props) {
 
+    // On click, do different things on different pages
     const handleClick = () => {
         if (props.page === "signIn") {
             props.setPage("playlistSelection")
@@ -16,6 +17,7 @@ export default function MainButton(props) {
         }
     }
 
+    // Set the button text for each page
     let button
     if (props.page === "signIn") {
         if (!(props.signedIn1 && props.signedIn2)) {

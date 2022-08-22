@@ -8,6 +8,7 @@ export default function SignIn(props) {
 
     let button;
 
+    // When a new user signs in, disable the link button on the other user until all the other users's playlists are recieved
     if (props.side === "left") {
         if (props.playlistsStatus2 === "notRequested") {
             button = <button onClick={props.handleLinkButton}>{linkText}</button>

@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 
 export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, logInTime1, logInTime2, setLogInTime1, setLogInTime2) {
 
-    let redirect_uri = "https://interspot.net/";
-    // let redirect_uri = "http://10.0.0.17:3000/";
-    let client_id = "0efc3677a80a4cf7b6057c244d948f0f";
-    let client_secret = "636fe3d7e2ee4e7087c2e1f7579a3e06"
+    const redirect_uri = "https://interspot.net/";
+    // const redirect_uri = "http://10.0.0.17:3000/";
+    const client_id = "0efc3677a80a4cf7b6057c244d948f0f";
+    const client_secret = "636fe3d7e2ee4e7087c2e1f7579a3e06"
     const AUTHORIZE = "https://accounts.spotify.com/authorize"
     const TOKEN = "https://accounts.spotify.com/api/token";
     const SCOPE = "user-read-private playlist-read-private playlist-modify-public"
 
+    // States
     const [access_token1, setAccess_token1] = useState(sessionStorage.getItem('access_token1') ?? "")
     const [access_token2, setAccess_token2] = useState(sessionStorage.getItem('access_token2') ?? "")
     const [refresh_token1, setRefresh_token1] = useState(sessionStorage.getItem('refresh_token1') ?? "")
@@ -19,22 +20,28 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
     let SpotifyWebApi = require('spotify-web-api-js');
     let spotifyApi = new SpotifyWebApi();
 
+    // Call onPageLaod() the first time page loads
     useEffect(() => {
         onPageLoad()
     }, [])
     
+    // If page is being redirected from Spotify Authentication, call handleRedirect()
     function onPageLoad() {
         if ( window.location.search.length > 0 ){
             handleRedirect();
         }
     }
     
+    // Get the Spotify Code from the URL parameter
+    // Call fetchAccessToken() with it
     function handleRedirect(){
         let code = getCode();
         fetchAccessToken( code );
         window.history.pushState("", "", redirect_uri); // remove param from url
     }
     
+    // Get the Spotify Code from the URL parameter
+    // returns: code
     function getCode(){
         let code = null;
         const queryString = window.location.search;
@@ -45,6 +52,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         return code;
     }
     
+    // Using the code, create a request for access token
     function fetchAccessToken( code ){
         let body = "grant_type=authorization_code";
         body += "&code=" + code; 
@@ -54,6 +62,8 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         callAuthorizationApi(body);
     }
     
+    // Ask for access token from Spotify
+    // Call handleAuthorizationResponse() when ready
     function callAuthorizationApi(body){
         let xhr = new XMLHttpRequest();
         xhr.open("POST", TOKEN, true);
@@ -63,6 +73,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         xhr.onload = handleAuthorizationResponse;
     }
 
+    // Send to authorization screen
     const requestAuthorization = () => {
         let url = AUTHORIZE;
         url += "?client_id=" + client_id;
@@ -73,6 +84,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         window.location.href = url; // Show Spotify's authorization screen
     }
     
+    // When the Authorization Response is received, set Access Token and Refresh Token, fetch the user info and playlists, set signedIn1 to true, and record sign-in time
     async function handleAuthorizationResponse(){
         if ( this.status == 200 ){
             let data = JSON.parse(this.responseText);
@@ -116,6 +128,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
 
     }
 
+    // When Access Token is expired, this function is called and refresh the Access Token.
     function refreshAccessToken(side, resolve){
         let body = "grant_type=refresh_token";
         body += "&refresh_token=" + (side === "left" ? refresh_token1 : refresh_token2);
@@ -157,6 +170,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         }
     }
 
+    // Fetch and then set the user's name, profile picture, and user ID.
     function setAccountInfo(side) {
         if (side === "left") {
             // spotifyApi.setAccessToken(access_token1)
@@ -213,12 +227,12 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
 
     }
 
+    // Fetch current user's playlists.
     function getPlaylists1() {
-        // spotifyApi1.setAccessToken(access_token1);
-        // spotifyApi.setAccessToken(access_token1)
         setPlaylistsStatus1("requested")
         let total;
         let tempPlaylists1 = [];
+        // Ask for the first 50 playlists (the max limit is 50)
         spotifyApi.getUserPlaylists({ limit: 50 })
         .then(
             function (data) {
@@ -240,12 +254,15 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 error()
             }
         ).then(
+            // Then, knowing the total number of playlists, make enough requests for 50 playlists with offsets to receive them all
+            // send all functions at the same time async
             async function() {
                 let offsets = [...Array(Math.ceil((total-50)/50)).keys()]
                 let playlistPromises = Promise.all(offsets.map(async (offset) => {
                     await spotifyApi.getUserPlaylists({ limit: 50, offset: (offset+1)*50})
                     .then(
                         function (data) {
+                            // For every playlist received:
                             for (var key in data.items) {
                                 let albumCover;
                                 if (data.items[key].images.length != 0) {
@@ -253,6 +270,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                                 } else {
                                     albumCover = "/img/DefaultCover.jpg"
                                 }
+                                // Keep the name, album cover, and ID
                                 tempPlaylists1.push({"name": data.items[key].name, "id": data.items[key].id, "cover": albumCover})
                             }
                             return new Promise((resolve, reject) => {
@@ -265,7 +283,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         }
                     )
                 }))
-                await playlistPromises;
+                await playlistPromises; // Wait for all the promises to resolve
                 setPlaylists1(tempPlaylists1); 
                 sessionStorage.setItem("playlists1", JSON.stringify(tempPlaylists1));
                 setPlaylistsStatus1("received")
@@ -273,11 +291,12 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         )
     }
 
+    // Fetch current user's playlists.
     function getPlaylists2() {
-        // spotifyApi.setAccessToken(access_token2)
         setPlaylistsStatus2("requested")
         let total;
         let tempPlaylists2 = [];
+        // Ask for the first 50 playlists (the max limit is 50)
         spotifyApi.getUserPlaylists({ limit: 50 })
         .then(
             function (data) {
@@ -299,6 +318,8 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 error()
             }
         ).then(
+            // Then, knowing the total number of playlists, make enough requests for 50 playlists with offsets to receive them all
+            // send all functions at the same time async
             async function() {
                 let offsets = [...Array(Math.ceil((total-50)/50)).keys()]
                 let playlistPromises = Promise.all(offsets.map(async (offset) => {
@@ -306,12 +327,14 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                     .then(
                         function (data) {
                             for (var key in data.items) {
+                                // For every playlist received:
                                 let albumCover;
                                 if (data.items[key].images.length != 0) {
                                     albumCover = data.items[key].images[0].url
                                 } else {
                                     albumCover = "/img/DefaultCover.jpg"
                                 }
+                                // Keep the name, album cover, and ID
                                 tempPlaylists2.push({"name": data.items[key].name, "id": data.items[key].id, "cover": albumCover})
                             }
                             return new Promise((resolve, reject) => {
@@ -324,7 +347,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                         }
                     )
                 }))
-                await playlistPromises;
+                await playlistPromises; // Wait for all the promises to resolve
                 setPlaylists2(tempPlaylists2);
                 sessionStorage.setItem("playlists2", JSON.stringify(tempPlaylists2));
                 setPlaylistsStatus2("received")
@@ -332,34 +355,12 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         )
     }
 
-    const getNextSongs = async (next, songs) => {
-        await spotifyApi.getGeneric(next)
-        .then(
-            async function (data) {
-                if (data != null) {
-                    for (let song in data.items) {
-                        songs.push(data.items[song].track.id)
-                    }
-                    next = data.next
-                    if (next != null) {
-                        await getNextSongs(next, songs)
-                    } else {
-                        // console.log(songs.length)
-                    }
-                }
-                return new Promise((resolve, reject) => {
-                    resolve()
-                })
-            },
-            function (err) {
-                console.error(err);
-                error()
-            }
-        )
-    }
-
+    // Create Intersection playlist
     async function generateIntersection() {
+        // Use the user1's access token
         spotifyApi.setAccessToken(access_token1);
+
+        // If it has been 58 minutes since the user logged in (almost expired access tokens), refresh access tokens
         let refreshAccessTokenPromise1
         let refreshAccessTokenPromise2
         if (Date.now() - logInTime1 > 3480000) {
@@ -372,30 +373,41 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 refreshAccessToken("right", resolve)
             })
         }
+        // Wait for access tokens to be refreshed
         await refreshAccessTokenPromise1
         await refreshAccessTokenPromise2
+
         let leftSongs = [];
         let rightSongs = [];
+        // Send all playlist track requests at the same time, then wait for all responses at the end
+        // Get the songs in the playlists selected by user1 in 100 song chunks
+        // For all playlists selected by user1:
         let leftPromises =  Promise.all(selectedPlaylists1.map(async (playlist) => {
+            // Get the first 100 songs
             await spotifyApi.getPlaylistTracks(playlist)
             .then(
                 async function (data) {
                     await (async function() {
+                        // Push the song IDs into the leftSongs array
                         for (let song in data.items) {
-                            leftSongs.push(data.items[song].track.id)
+                            if (data.items[song].track != null) {
+                                leftSongs.push(data.items[song].track.id)
+                            }
                         }
                         let total = data.total;
                         let songOffsets = [...Array(Math.ceil(total/100)-1).keys()]
+                        // Knowing the total number of songs in the playlist, request for them all in 100 song chunks
                         await Promise.all(songOffsets.map(async (offset) => {
                             await spotifyApi.getPlaylistTracks(playlist, {offset: (offset+1)*100})
                             .then(
                                 function (data2) {
-                                    // console.log(data2);
                                     for (let song in data2.items) {
                                         if (data2.items[song].track != null) {
+                                            // Push the song IDs into the leftSongs array
                                             leftSongs.push(data2.items[song].track.id)
                                         }
                                     }
+                                    // Resolve the promise for this chunk
                                     return new Promise((resolve, reject) => {
                                         resolve()
                                     })
@@ -405,6 +417,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                                 }
                             )
                         }))
+                        // Resolve the promise for this playlist
                         return new Promise((resolve, reject) => {
                             resolve()
                         })
@@ -416,27 +429,34 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 }
             )
         }));
+        // Get the songs in the playlists selected by user2 in 100 song chunks
+        // For all playlists selected by user2:
         let rightPromises = Promise.all(selectedPlaylists2.map(async (playlist) => {
+            // Get the first 100 songs
             await spotifyApi.getPlaylistTracks(playlist)
             .then(
                 async function (data) {
                     await (async function() {
-                        // console.log(data);
+                        // Push the song IDs into the leftSongs array
                         for (let song in data.items) {
-                            rightSongs.push(data.items[song].track.id)
+                            if (data.items[song].track != null) {
+                                rightSongs.push(data.items[song].track.id)
+                            }
                         }
                         let total = data.total;
                         let songOffsets = [...Array(Math.ceil(total/100)-1).keys()]
+                        // Knowing the total number of songs in the playlist, request for them all in 100 song chunks
                         await Promise.all(songOffsets.map(async (offset) => {
                             await spotifyApi.getPlaylistTracks(playlist, {offset: (offset+1)*100})
                             .then(
                                 function (data2) {
-                                    // console.log(data2);
+                                    // Push the song IDs into the leftSongs array
                                     for (let song in data2.items) {
                                         if (data2.items[song].track != null) {
                                             rightSongs.push(data2.items[song].track.id)
                                         }
                                     }
+                                    // Resolve the promise for this chunk
                                     return new Promise((resolve, reject) => {
                                         resolve()
                                     })
@@ -446,6 +466,7 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                                 }
                             )
                         }))
+                        // Resolve the promise for this playlist
                         return new Promise((resolve, reject) => {
                             resolve()
                         })
@@ -457,24 +478,32 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                 }
             )
         }));
+        // Await all the promises
         await leftPromises;
         await rightPromises;
+
+        // Find the intersection
         let intersection = leftSongs.filter(song => rightSongs.includes(song));
         let intersectionURI = intersection.map(songId => {return "spotify:track:" + songId})
+        // If there are no songs in common, let the user know
         if (intersection.length === 0) {
             error("You have no songs in common :(")
         } else {
             setPage("success")
             let successPromise = new Promise((resolve, reject) => {
+                // Wait at least 2 seconds on the success page before showing the results
                 setTimeout(function(){
                     resolve()
                 }, 2000);
             })
+            // Create the playlist for user1
             await spotifyApi.createPlaylist(userId1, {name: (name1 + " and " + name2)})
             .then(
                 async function(data) {
+                    // Get the id of the playlist just created
                     let playlistId = data.id
                     setIntersectionId(playlistId)
+                    // Add the songs in the intersection to the playlists
                     let intersectionOffsets = [...Array(Math.ceil(intersection.length/100)).keys()]
                     let addTracksPromises = Promise.all(intersectionOffsets.map(async (offset) => {
                         await spotifyApi.addTracksToPlaylist(playlistId, intersectionURI.slice(offset*100, (offset+1)*100))
@@ -482,16 +511,20 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
                             resolve()
                         })
                     }))
-                    await addTracksPromises
+                    await addTracksPromises // Wait until all songs are added to the playlist
+
+                    // If user1 and user2 aren't the same account, make user2 follow the playlist created by user1
                     if (userId1 != userId2) {
                         spotifyApi.setAccessToken(access_token2)
                         spotifyApi.followPlaylist(playlistId)
                     }
+                    // Get the intersection playlist cover image
                     await spotifyApi.getPlaylistCoverImage(playlistId)
                     .then(
                         async function(data2) {
                             await setIntersectionCover(data2[0].url)
                             await successPromise
+                            // Set page to "result"
                             setPage("result")
                         },
                         function(err) {
@@ -508,11 +541,14 @@ export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage,
         }
     }
 
+    // Show error message to user
+    // Default error message: "We ran into an error. Please Try again"
     function error(message = "We ran into an error. Please Try again") {
         setErrorMessage(message)
         setPage("error")
     }
 
+    // Export requestAuthorization and generateIntersection to Interspot.js
     return [requestAuthorization, generateIntersection];
 
 }

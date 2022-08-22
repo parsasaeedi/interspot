@@ -32,6 +32,7 @@ export default function Interspot() {
     const [logInTime1, setLogInTime1] = useState(sessionStorage.getItem('logInTime1') ?? "")
     const [logInTime2, setLogInTime2] = useState(sessionStorage.getItem('logInTime2') ?? "")
 
+    // Restart the app
     function restart() {
         setPage("signIn")
         setSelectedPlaylists1([])
@@ -44,6 +45,7 @@ export default function Interspot() {
         setSelectedPlaylists2([])
     }
 
+    // Use Custom Hook useSpotifyAPI for cleaner code
     const [requestAuthorization, generateIntersection] = useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, logInTime1, logInTime2, setLogInTime1, setLogInTime2);
 
     // event handlers
@@ -58,12 +60,10 @@ export default function Interspot() {
     const handleLinkButton1 = ({target}) => {
         sessionStorage.setItem('whoAsked', "left");
         requestAuthorization();
-        // Do stuff
     }
     const handleLinkButton2 = ({target}) => {
         sessionStorage.setItem('whoAsked', "right");
         requestAuthorization();
-        // Do stuff
     }
 
     function copyTextToClipboard(text) {
@@ -74,7 +74,7 @@ export default function Interspot() {
         }
     }
 
-
+    // Set user device type
     let device;
     if((/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
         device = "mobile"
@@ -82,8 +82,10 @@ export default function Interspot() {
         device = "desktop"
     }
 
+    // Set the content displayed
     let containerContent;
     let headerClass;
+    // signIn and playlistSelection
     if (page === "signIn" || page === "playlistSelection") {
         headerClass = "header headerLong"
         if (device === "desktop") {
@@ -104,6 +106,7 @@ export default function Interspot() {
                 <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
             </div>
         }
+    // waiting
     } else if (page === "waiting") {
         headerClass = "header headerShort"
         containerContent = 
@@ -117,6 +120,7 @@ export default function Interspot() {
             </div>
             <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
+    // success
     } else if (page === "success") {
         headerClass = "header headerShort"
         containerContent = 
@@ -127,6 +131,7 @@ export default function Interspot() {
             </div>
             <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
+    // result
     } else if (page === "result") {
         headerClass = "header headerShort headerBlack"
         let intersectionLink = "https://open.spotify.com/playlist/" + intersectionId
@@ -147,6 +152,7 @@ export default function Interspot() {
                 <span>Star on GitHub</span>
             </a>
         </div>
+    // error
     } else if (page === "error") {
         headerClass = "header headerShort"
         containerContent = 
