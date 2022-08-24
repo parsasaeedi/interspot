@@ -8,7 +8,6 @@
   padding: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: Gotham;
 }
 
 html {
@@ -57,6 +56,10 @@ html {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
+}
+
+.header * {
+  font-family: Gotham;
 }
 
 @media only screen and (min-width: 62em) {
@@ -891,5 +894,109 @@ html {
   .header .openSource {
     display: none;
   }
+}
+
+.header .privacyPolicyLink {
+  position: absolute;
+  left: 0.5vw;
+  bottom: 0.5vw;
+  color: #606060;
+  font-size: 0.5vw;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .privacyPolicyLink {
+    display: none;
+  }
+}
+
+.privacyPolicy {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: white;
+}
+
+.privacyPolicy .markdown {
+  color: black;
+  background-color: white;
+  width: 70vw;
+  padding: 3vh 0 3vh 0;
+  word-wrap: break-word;
+  font-size: 16px;
+  line-height: 28px;
+  list-style: inside;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+.privacyPolicy .markdown p {
+  -webkit-margin-before: 1em;
+          margin-block-start: 1em;
+  -webkit-margin-after: 1em;
+          margin-block-end: 1em;
+}
+
+.privacyPolicy .markdown h1 {
+  font-size: 40px;
+  line-height: 60px;
+  font-weight: 700;
+  -webkit-margin-before: 0.67em;
+          margin-block-start: 0.67em;
+  -webkit-margin-after: 0.67em;
+          margin-block-end: 0.67em;
+}
+
+.privacyPolicy .markdown h2 {
+  font-size: 32px;
+  line-height: 48px;
+  font-weight: 700;
+  -webkit-margin-before: 0.83em;
+          margin-block-start: 0.83em;
+  -webkit-margin-after: 0.83em;
+          margin-block-end: 0.83em;
+}
+
+.privacyPolicy .markdown h3 {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 700;
+  -webkit-margin-before: 1em;
+          margin-block-start: 1em;
+  -webkit-margin-after: 1em;
+          margin-block-end: 1em;
+}
+
+.privacyPolicy .markdown h4 {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.privacyPolicy .markdown h5 {
+  font-size: 16px;
+}
+
+.privacyPolicy .markdown h5, .privacyPolicy .markdown h6 {
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.privacyPolicy .markdown h6 {
+  font-size: 16px;
+}
+
+.privacyPolicy .markdown ul {
+  padding-left: 30px;
+}
+
+.privacyPolicy .markdown li {
+  line-height: 40px;
+}
+
+.privacyPolicy .markdown a {
+  color: #1DB954;
 }
 /*# sourceMappingURL=App.css.map */

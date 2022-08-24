@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Welcome(props) {
 
@@ -47,6 +48,7 @@ export default function Welcome(props) {
                 </div>
             </div>
             <button onClick={handleButton} className="mainButton">CONTINUE</button>
+            <Link className="privacyPolicyLink" to="/privacy-policy">Privacy Policy</Link>
             <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
     )
