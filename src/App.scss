@@ -277,6 +277,16 @@ html {
                         grid-template-columns: 40% 40%;
                     }
 
+                    .playlistLink {
+                        .playlistLinkIcon {
+                            width: 0.8rem;
+                            height: 0.8rem;
+                            margin-left: 0.3vw;
+                            fill: #606060;
+                        }
+                        color: #606060;
+                    }
+
                     .playlist {
     
                         display: flex;
@@ -304,6 +314,9 @@ html {
                         .playlistCover {
                             width: 100%;
                             margin-bottom: 5%;
+                        }
+                        .playlistLink {
+                            color: white;
                         }
                     }
                 }

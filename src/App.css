@@ -444,6 +444,17 @@ html {
   }
 }
 
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistLink, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistLink {
+  color: #606060;
+}
+
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistLink .playlistLinkIcon, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistLink .playlistLinkIcon {
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-left: 0.3vw;
+  fill: #606060;
+}
+
 .header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlist, .header .container .signIn .playlistsContainer .playlistsWrapper .playlist {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -484,6 +495,10 @@ html {
 .header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistSelected .playlistCover, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistSelected .playlistCover {
   width: 100%;
   margin-bottom: 5%;
+}
+
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistSelected .playlistLink, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistSelected .playlistLink {
+  color: white;
 }
 
 .header .container .playlistSelection .addPlaylist, .header .container .playlistSelection .linkProfile, .header .container .signIn .addPlaylist, .header .container .signIn .linkProfile {
