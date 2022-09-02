@@ -95,6 +95,7 @@ export default function Interspot() {
                 <Content side="left" page={page} signedIn={signedIn1} name={name1} handleChangeName={handleChangeName1} placeholder="user1" handleLinkButton={handleLinkButton1} profilePicture={profilePicture1} playlists={playlists1} selectedPlaylists={selectedPlaylists1} setSelectedPlaylists={setSelectedPlaylists1} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
                 <div className="verticalLine"></div>
                 <Content side="right" page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
+                <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
             </div>
         } else {
             containerContent = <div className="containerWrapper">
@@ -104,6 +105,7 @@ export default function Interspot() {
                 <div className="container">
                     <Content side="right" page={page} signedIn={signedIn2} name={name2} handleChangeName={handleChangeName2} placeholder="user2" handleLinkButton={handleLinkButton2} profilePicture={profilePicture2} playlists={playlists2} selectedPlaylists={selectedPlaylists2} setSelectedPlaylists={setSelectedPlaylists2} playlistsStatus1={playlistsStatus1} playlistsStatus2={playlistsStatus2}/>
                 </div>
+                <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
             </div>
         }
     // waiting
@@ -118,6 +120,7 @@ export default function Interspot() {
                     <div className="double-bounce2"></div>
                 </div>
             </div>
+            <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
     // success
     } else if (page === "success") {
@@ -128,6 +131,7 @@ export default function Interspot() {
                 <span>Playlist Generated!</span>
                 <img className="loadingAnimation" src="/img/success.gif" alt="success"/>
             </div>
+            <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
         </div>
     // result
     } else if (page === "result") {
@@ -169,7 +173,6 @@ export default function Interspot() {
                 <a href="./"><img src="/img/InterspotLogo.png" alt="InterspotLogo" className="interspotLogo" /></a>
                 {containerContent}
                 <MainButton page={page} handleLinkButton={handleLinkButton2} setPage={setPage} signedIn1={signedIn1} signedIn2={signedIn2} selectedPlaylists1={selectedPlaylists1} selectedPlaylists2={selectedPlaylists2} generateIntersection={generateIntersection} restart={restart} goToPlaylistSelection={goToPlaylistSelection}/>
-                <a className="openSource" href="https://github.com/parsasaeedi/interspot">Open Source</a>
                 <Link className="privacyPolicyLink" to="/privacy-policy">Privacy Policy</Link>
             </div>
         )
