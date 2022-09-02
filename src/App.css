@@ -11,7 +11,7 @@
 }
 
 html {
-  background-color: black;
+  background-color: #000000;
 }
 
 @media only screen and (max-width: 62em) {
@@ -41,7 +41,7 @@ html {
 }
 
 .header {
-  background-color: black;
+  background-color: #000000;
   width: 100vw;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -103,7 +103,7 @@ html {
 }
 
 .header .welcomeContainer .about {
-  color: white;
+  color: #FFFFFF;
   height: 20%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -285,7 +285,7 @@ html {
 }
 
 .header .container .playlistSelection, .header .container .signIn {
-  color: white;
+  color: #FFFFFF;
   width: 32%;
   height: 85%;
   display: -webkit-box;
@@ -377,7 +377,7 @@ html {
   width: 50%;
   border-radius: 100vw;
   border: none;
-  background-color: black;
+  background-color: #000000;
 }
 
 @media only screen and (max-width: 62em) {
@@ -451,7 +451,7 @@ html {
 .header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistLink .playlistLinkIcon, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistLink .playlistLinkIcon {
   width: 0.8rem;
   height: 0.8rem;
-  margin-left: 0.3vw;
+  margin-left: 0.3rem;
   fill: #606060;
 }
 
@@ -498,7 +498,7 @@ html {
 }
 
 .header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistSelected .playlistLink, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistSelected .playlistLink {
-  color: white;
+  color: #FFFFFF;
 }
 
 .header .container .playlistSelection .addPlaylist, .header .container .playlistSelection .linkProfile, .header .container .signIn .addPlaylist, .header .container .signIn .linkProfile {
@@ -554,7 +554,7 @@ html {
 
 .header .container .playlistSelection .addPlaylist button, .header .container .playlistSelection .linkProfile button, .header .container .signIn .addPlaylist button, .header .container .signIn .linkProfile button {
   background-color: #1ED760;
-  color: white;
+  color: #FFFFFF;
   height: 100%;
   border: none;
   border-radius: 2vw;
@@ -565,7 +565,7 @@ html {
 
 .header .container .playlistSelection button, .header .container .signIn button {
   background-color: #1ED760;
-  color: white;
+  color: #FFFFFF;
   height: 6%;
   border: none;
   border-radius: 10vw;
@@ -590,7 +590,7 @@ html {
 }
 
 .header .container .loading {
-  color: white;
+  color: #FFFFFF;
   text-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -673,7 +673,7 @@ html {
 .header .container .intersectionCard {
   background-color: #202020;
   border-radius: 2vw;
-  color: white;
+  color: #FFFFFF;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -747,7 +747,7 @@ html {
 .header .container .intersectionCard .intersectionLink a {
   text-decoration: none;
   font-size: 0.53vw;
-  color: white;
+  color: #FFFFFF;
 }
 
 @media only screen and (max-width: 62em) {
@@ -758,7 +758,7 @@ html {
 
 .header .container .intersectionCard .intersectionLink button {
   background-color: #606060;
-  color: white;
+  color: #FFFFFF;
   height: 100%;
   border: none;
   border-radius: 2vw;
@@ -783,7 +783,7 @@ html {
   background-color: #1ED760;
   border-radius: 10vw;
   height: 7%;
-  color: white;
+  color: #FFFFFF;
   font-size: 1vw;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -816,7 +816,7 @@ html {
 }
 
 .header .container .error {
-  color: white;
+  color: #FFFFFF;
   font-size: 1vw;
 }
 
@@ -830,7 +830,7 @@ html {
 
 .header .mainButton {
   background-color: #1ED760;
-  color: white;
+  color: #FFFFFF;
   width: 12vw;
   height: 3vw;
   border-radius: 10vw;
@@ -932,12 +932,12 @@ html {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  background-color: white;
+  background-color: #FFFFFF;
 }
 
 .privacyPolicy .markdown {
-  color: black;
-  background-color: white;
+  color: #000000;
+  background-color: #FFFFFF;
   width: 70vw;
   padding: 3vh 0 3vh 0;
   word-wrap: break-word;

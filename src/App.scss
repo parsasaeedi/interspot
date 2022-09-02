@@ -1,4 +1,13 @@
 $iphone: 62em;
+$SpotifyBlack: #000000;
+$SpotifyWhite: #FFFFFF;
+// $SpotifyGreen: #1DB954;
+$SpotifyGreen: #1ED760;
+$DarkGray: #121212;
+$MediumGray: #202020;
+$LightGray: #606060;
+
+
 
 @font-face {
     font-family: Gotham;
@@ -13,7 +22,7 @@ $iphone: 62em;
 }
 
 html {
-    background-color: black;
+    background-color: $SpotifyBlack;
 }
 
 .headerShort {
@@ -37,7 +46,7 @@ html {
 }
   
 .header {
-    background-color: black;
+    background-color: $SpotifyBlack;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -71,7 +80,7 @@ html {
         }
 
         .about {
-            color: white;
+            color: $SpotifyWhite;
             height: 20%;
             display: flex;
             flex-direction: column;
@@ -130,7 +139,7 @@ html {
                     }
                 }
                 .stepInfo {
-                    color: #606060;
+                    color: $LightGray;
                     height: 10%;
                     text-align: center;
                     font-size: 1.2vw;
@@ -163,7 +172,7 @@ html {
     }
   
     .container {
-        background-color: #121212;
+        background-color: $DarkGray;
         // background-color: black;
         width: 85vw;
         height: 75vh;
@@ -176,12 +185,12 @@ html {
         }
 
         .verticalLine {
-            border-left: 1px solid #202020;
+            border-left: 1px solid $MediumGray;
             height: 95%
         }
 
         .playlistSelection, .signIn {
-            color: white;
+            color: $SpotifyWhite;
             width: 32%;
             height: 85%;
             display: flex;
@@ -194,7 +203,7 @@ html {
             }
 
             .name {
-                background-color: #202020;
+                background-color: $MediumGray;
                 border-radius: 10vw;
                 width: 30%;
                 height: 6%;
@@ -207,12 +216,12 @@ html {
                 }
 
                 input {
-                    background-color: #202020;
+                    background-color: $MediumGray;
                     max-width: 80%;
                     width: fit-content;
                     resize: none;
                     border: none;
-                    color: #606060;
+                    color: $LightGray;
                     font-size: 1.1vw;
                     text-align: center;
                     @media only screen and (max-width: $iphone) {
@@ -220,7 +229,7 @@ html {
                     }
 
                     &::placeholder {
-                        color: #606060;
+                        color: $LightGray;
                     }
                     &:focus {
                         outline: none;
@@ -233,14 +242,14 @@ html {
                 width: 50%;
                 border-radius: 100vw;
                 border: none;
-                background-color: black;
+                background-color: $SpotifyBlack;
                 @media only screen and (max-width: $iphone) {
                     width: 60%;
                 }
             }
 
             .guide {
-                color: #606060;
+                color: $LightGray;
                 font-size: 1.5vw;
                 text-align: center;
                 width: 70%;
@@ -251,7 +260,7 @@ html {
             }
 
             .playlistsContainer {
-                background-color: #202020;
+                background-color: $MediumGray;
                 width: 100%;
                 height: 90%;
                 border-radius: 2vw;
@@ -281,10 +290,10 @@ html {
                         .playlistLinkIcon {
                             width: 0.8rem;
                             height: 0.8rem;
-                            margin-left: 0.3vw;
-                            fill: #606060;
+                            margin-left: 0.3rem;
+                            fill: $LightGray;
                         }
-                        color: #606060;
+                        color: $LightGray;
                     }
 
                     .playlist {
@@ -307,7 +316,7 @@ html {
                         flex-direction: column;
                         justify-content: space-between;
                         text-align: center;
-                        background-color: #1ED760;
+                        background-color: $SpotifyGreen;
                         padding: 5%;
                         border-radius: 4%;
 
@@ -316,7 +325,7 @@ html {
                             margin-bottom: 5%;
                         }
                         .playlistLink {
-                            color: white;
+                            color: $SpotifyWhite;
                         }
                     }
                 }
@@ -325,7 +334,7 @@ html {
 
             .addPlaylist, .linkProfile {
                 width: 100%;
-                background-color: #202020;
+                background-color: $MediumGray;
                 height: 6%;
                 border-radius: 2vw;
                 display: flex;
@@ -334,14 +343,14 @@ html {
                 padding-left: 3%;
 
                 input {
-                    background-color: #202020;
+                    background-color: $MediumGray;
                     width: 72%;
                     resize: none;
                     border: none;
-                    color: #606060;
+                    color: $LightGray;
                     font-size: 1vw;
                     &::placeholder {
-                        color: #606060;
+                        color: $LightGray;
                     }
                     &:focus {
                         outline: none;
@@ -350,12 +359,12 @@ html {
 
                 img {
                     height: 50%;
-                    fill: #606060;
+                    fill: $LightGray;
                 }
 
                 button {
-                    background-color: #1ED760;
-                    color: white;
+                    background-color: $SpotifyGreen;
+                    color: $SpotifyWhite;
                     height: 100%;
                     border: none;
                     border-radius: 2vw;
@@ -365,8 +374,8 @@ html {
                 }
             }   
             button {
-                background-color: #1ED760;
-                color: white;
+                background-color: $SpotifyGreen;
+                color: $SpotifyWhite;
                 height: 6%;
                 border: none;
                 border-radius: 10vw;
@@ -375,8 +384,8 @@ html {
                 font-size: 1.1vw;
                 cursor: pointer;
                 &:disabled {
-                    background-color: #606060;
-                    color: #202020;
+                    background-color: $LightGray;
+                    color: $MediumGray;
                     cursor: not-allowed;
                 }
                 @media only screen and (max-width: $iphone) {
@@ -388,7 +397,7 @@ html {
         }
 
         .loading {
-            color: white;
+            color: $SpotifyWhite;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -417,7 +426,7 @@ html {
                 width: 100%;
                 height: 100%;
                 border-radius: 50%;
-                background-color: #606060;
+                background-color: $LightGray;
                 opacity: 0.6;
                 position: absolute;
                 top: 0;
@@ -449,9 +458,9 @@ html {
         }
 
         .intersectionCard {
-            background-color: #202020;
+            background-color: $MediumGray;
             border-radius: 2vw;
-            color: white;
+            color: $SpotifyWhite;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
@@ -480,7 +489,7 @@ html {
             }
             .intersectionLink {
                 width: 80%;
-                background-color: #606060;
+                background-color: $LightGray;
                 height: 6%;
                 border-radius: 10vw;
                 display: flex;
@@ -496,15 +505,15 @@ html {
                 & a {
                     text-decoration: none;
                     font-size: 0.53vw;
-                    color: white;
+                    color: $SpotifyWhite;
                     @media only screen and (max-width: $iphone) {
                         font-size: 1.8vw;
                     }
                 }
 
                 button {
-                    background-color: #606060;
-                    color: white;
+                    background-color: $LightGray;
+                    color: $SpotifyWhite;
                     height: 100%;
                     border: none;
                     border-radius: 2vw;
@@ -523,10 +532,10 @@ html {
             }
             .openInSpotify {
                 width: 80%;
-                background-color: #1ED760;
+                background-color: $SpotifyGreen;
                 border-radius: 10vw;
                 height: 7%;
-                color: white;
+                color: $SpotifyWhite;
                 font-size: 1vw;
                 display: flex;
                 justify-content: center;
@@ -547,7 +556,7 @@ html {
         }
 
         .error {
-            color: white;
+            color: $SpotifyWhite;
             font-size: 1vw;
             @media only screen and (max-width: $iphone) {
                 width: 80%;
@@ -564,8 +573,8 @@ html {
             height: 15vw;
             font-size: 7vw;
         }
-        background-color: #1ED760;
-        color: white;
+        background-color: $SpotifyGreen;
+        color: $SpotifyWhite;
         width: 12vw;
         height: 3vw;
         border-radius: 10vw;
@@ -577,8 +586,8 @@ html {
         justify-content: center;
         align-items: center;
         &:disabled {
-            background-color: #606060;
-            color: #202020;
+            background-color: $LightGray;
+            color: $MediumGray;
             cursor: not-allowed;
         }
     }
@@ -590,19 +599,19 @@ html {
         position: absolute;
         right: 0.5vw;
         bottom: 0.5vw;
-        color: #606060;
+        color: $LightGray;
         text-decoration: none;
         font-size: 0.8vw;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
         justify-items: center;
-        background-color: #202020;
+        background-color: $MediumGray;
         height: 2vw;
         width: 8.5vw;
         border-radius: 10vw;
         svg {
-            fill: #606060;
+            fill: $LightGray;
             height: 50%;
         }
     }
@@ -614,7 +623,7 @@ html {
         position: absolute;
         right: 0.5vw;
         bottom: 0.5vw;
-        color: #606060;
+        color: $LightGray;
         // text-decoration: none;
         font-size: 0.5vw;
     }
@@ -625,7 +634,7 @@ html {
         position: absolute;
         left: 0.5vw;
         bottom: 0.5vw;
-        color: #606060;
+        color: $LightGray;
         // text-decoration: none;
         font-size: 0.5vw;
     }
@@ -634,11 +643,11 @@ html {
 .privacyPolicy {
     display: flex;
     justify-content: center;
-    background-color: white;
+    background-color: $SpotifyWhite;
 
     .markdown {
-        color: black;
-        background-color: white;
+        color: $SpotifyBlack;
+        background-color: $SpotifyWhite;
         width: 70vw;
         padding: 3vh 0 3vh 0;
         word-wrap: break-word;
@@ -694,7 +703,7 @@ html {
             line-height: 40px;
         }
         a {
-            // color: white;
+            // color: $SpotifyWhite;
             color: #1DB954;
         }
     }
