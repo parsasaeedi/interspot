@@ -33,7 +33,7 @@ export default function Playlist(props) {
             />
             <span className="playlistName">
                 {props.name} 
-                <a className="playlistLink" href={playlistLink} alt="Playlist Link">{externalLinkIcon}</a>
+                <a className="playlistLink" href={playlistLink} alt="Playlist Link" target="_blank" rel="noopener noreferrer">{externalLinkIcon}</a>
             </span>
         </div>
     )
