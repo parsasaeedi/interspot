@@ -189,17 +189,30 @@ html {
             height: 95%
         }
 
+        .playlistSelection {
+            height: 90%;
+            @media only screen and (max-width: $iphone) {
+                height: 90%;
+            }
+        }
+        .signIn {
+            height: 85%;
+            @media only screen and (max-width: $iphone) {
+                height: 90%;
+            }
+        }
+
         .playlistSelection, .signIn {
             color: $SpotifyWhite;
             width: 32%;
-            height: 85%;
+            // height: 90%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
             @media only screen and (max-width: $iphone) {
                 width: 90%;
-                height: 90%;
+                // height: 90%;
             }
 
             .name {
@@ -259,17 +272,24 @@ html {
                 }
             }
 
+            .spotifyLogo {
+                width: 25%;
+                @media only screen and (max-width: $iphone) {
+                    width: 30%;
+                }
+            }
+
             .playlistsContainer {
                 background-color: $MediumGray;
                 width: 100%;
-                height: 90%;
+                height: 80%;
                 border-radius: 2vw;
                 padding: 5%;
                 display: flex;
                 justify-content: center;
                 @media only screen and (max-width: $iphone) {
                     border-radius: 4vw;
-                    height: 87%;
+                    height: 77%;
                 }
                 
                 .playlistsWrapper {
@@ -285,6 +305,10 @@ html {
                         overflow-x: hidden;
                         grid-template-columns: 40% 40%;
                     }
+                    overflow-x: hidden;
+                    // .example::-webkit-scrollbar {
+                    //     display: none;
+                    // }
 
                     .playlistLink {
                         .playlistLinkIcon {
@@ -301,8 +325,8 @@ html {
                         display: flex;
                         flex-direction: column;
                         justify-content: flex-start;
-    
                         text-align: center;
+                        
                         .playlistCover {
                             width: 100%;
                             margin-bottom: 10%;
@@ -314,14 +338,18 @@ html {
     
                         display: flex;
                         flex-direction: column;
-                        justify-content: space-between;
+                        justify-content: flex-start;
                         text-align: center;
                         background-color: $SpotifyGreen;
                         padding: 5%;
                         border-radius: 4%;
+                        height: fit-content;
 
                         .playlistCover {
                             width: 100%;
+                        }
+                        .playlistName {
+                            margin-top: 8%;
                             margin-bottom: 5%;
                         }
                         .playlistLink {

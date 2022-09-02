@@ -24,7 +24,13 @@ export default function Playlist(props) {
     
     return (
         <div className={className} onClick={handleClick}>
-            <img src={props.cover} alt={props.name} className="playlistCover" />
+            <img 
+                src={props.cover} alt={props.name} className="playlistCover" 
+                onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src="/img/DefaultCover.jpg";
+                }}
+            />
             <span className="playlistName">
                 {props.name} 
                 <a className="playlistLink" href={playlistLink} alt="Playlist Link">{externalLinkIcon}</a>

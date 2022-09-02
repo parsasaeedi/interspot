@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 export default function useSpotifyAPI(name1, setName1, name2, setName2, setPage, playlists1, setPlaylists1, playlists2, setPlaylists2, whoAsked, setWhoAsked, setSignedIn1, setSignedIn2, setProfilePicture1, setProfilePicture2, selectedPlaylists1, selectedPlaylists2, userId1, userId2, setUserId1, setUserId2, intersectionId, setIntersectionId, setIntersectionCover, setPlaylistsStatus1, setPlaylistsStatus2, errorMessage, setErrorMessage, logInTime1, logInTime2, setLogInTime1, setLogInTime2) {
 
-    // const redirect_uri = "https://interspot.net/";
-    const redirect_uri = "http://10.0.0.17:3000/";
+    const redirect_uri = "https://interspot.net/";
+    // const redirect_uri = "http://10.0.0.17:3000/";
     const client_id = "0efc3677a80a4cf7b6057c244d948f0f";
     const client_secret = "636fe3d7e2ee4e7087c2e1f7579a3e06"
     const AUTHORIZE = "https://accounts.spotify.com/authorize"

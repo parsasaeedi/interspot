@@ -13,6 +13,7 @@ export default function PlaylistSelection(props) {
                     ))}
                 </div>
             </div>
+            <img className="spotifyLogo" src="/img/Spotify_Logo_RGB_White.png" alt="Spotify Logo" />
             {/* <div className="addPlaylist">
                 <input type="text" name="playlistId1" id="playlistId1" className="playlistId" spellCheck="false" placeholder="PLAYLIST LINK"/>
                 <img src="/img/circle-question.png" alt="help" />

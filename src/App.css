@@ -284,10 +284,29 @@ html {
   height: 95%;
 }
 
+.header .container .playlistSelection {
+  height: 90%;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection {
+    height: 90%;
+  }
+}
+
+.header .container .signIn {
+  height: 85%;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .signIn {
+    height: 90%;
+  }
+}
+
 .header .container .playlistSelection, .header .container .signIn {
   color: #FFFFFF;
   width: 32%;
-  height: 85%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -306,7 +325,6 @@ html {
 @media only screen and (max-width: 62em) {
   .header .container .playlistSelection, .header .container .signIn {
     width: 90%;
-    height: 90%;
   }
 }
 
@@ -400,10 +418,20 @@ html {
   }
 }
 
+.header .container .playlistSelection .spotifyLogo, .header .container .signIn .spotifyLogo {
+  width: 25%;
+}
+
+@media only screen and (max-width: 62em) {
+  .header .container .playlistSelection .spotifyLogo, .header .container .signIn .spotifyLogo {
+    width: 30%;
+  }
+}
+
 .header .container .playlistSelection .playlistsContainer, .header .container .signIn .playlistsContainer {
   background-color: #202020;
   width: 100%;
-  height: 90%;
+  height: 80%;
   border-radius: 2vw;
   padding: 5%;
   display: -webkit-box;
@@ -417,7 +445,7 @@ html {
 @media only screen and (max-width: 62em) {
   .header .container .playlistSelection .playlistsContainer, .header .container .signIn .playlistsContainer {
     border-radius: 4vw;
-    height: 87%;
+    height: 77%;
   }
 }
 
@@ -433,6 +461,7 @@ html {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  overflow-x: hidden;
 }
 
 @media only screen and (max-width: 62em) {
@@ -483,17 +512,24 @@ html {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
   text-align: center;
   background-color: #1ED760;
   padding: 5%;
   border-radius: 4%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistSelected .playlistCover, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistSelected .playlistCover {
   width: 100%;
+}
+
+.header .container .playlistSelection .playlistsContainer .playlistsWrapper .playlistSelected .playlistName, .header .container .signIn .playlistsContainer .playlistsWrapper .playlistSelected .playlistName {
+  margin-top: 8%;
   margin-bottom: 5%;
 }
 
